@@ -13,7 +13,7 @@
 <template>
   <headerComp/>
 
-  <h1 class="text-center">ciao</h1>
+  <!-- <router-view></router-view> -->
   
 </template>
 
