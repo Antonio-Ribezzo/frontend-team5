@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import AppHome from './pages/AppHome.vue';
-// import PostList from './pages/PostList.vue';
+import NotFound from './pages/NotFound.vue';
+import singleRestaurant from './pages/singleRestaurant.vue';
+
 const router = createRouter({
 history: createWebHistory(),
 routes: [
     {
-        // path: '/',
-        // name: 'home',
-        // component: AppHome
+        path: '/restaurant/:slug',
+        name: 'restaurant',
+        component: singleRestaurant
     },
     {
-        // path: '/blog',
-        // name: 'posts',
-        // component: PostList
+        path: "/:pathMatch(.*)*",
+        name: 'NotFound',
+        component: NotFound
     },
 ]
 });
