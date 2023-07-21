@@ -69,8 +69,7 @@ export default {
         <!-- lista ristoranti -->
         <ul class="mt-4">
             <li v-for="(elem, index) in restaurants" :key="index">
-                <router-link :to="{ name: 'singleRestaurant', params: { slug: elem.slug } }">{{ elem.name }}</router-link>
-
+                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }">{{ elem.name }}</router-link>
             </li>
         </ul>
     </div>
