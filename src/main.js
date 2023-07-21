@@ -7,4 +7,4 @@ import { router } from './router';
 // importo bootstrap
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 
-createApp(App).mount('#app')
+createApp(App).use(router).mount('#app')

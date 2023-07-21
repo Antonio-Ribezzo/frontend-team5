@@ -15,7 +15,7 @@
                 </button>
 
                 <div class="d-flex flex-column flex-lg-row">
-                    <div class="collapse navbar-collapse me-auto" id="navbarNav">
+                    <div class="collapse navbar-collapse mx-auto" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -36,9 +36,74 @@
             </div>
         </nav>
     </div>
+        
+    
 
 </template>
 
 <style lang="scss" scoped>
+
+nav {
+    width: 100%;
+    margin-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sb-top-bar-frame {
+    width: 100%;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: solid 1px #F2F3F5;
+    border-top: solid 1px #F2F3F5;
+}
+
+.sb-top-bar-frame .sb-top-bar-bg {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.sb-top-bar-frame .sb-top-bar {
+    padding: 0 15px;
+    position: relative;
+    height: 120px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s ease-in-out;
+}
+
+.sb-top-bar-frame .sb-top-bar .sb-logo-frame {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    width: 130px;
+    transition: 0.3s ease-in-out;
+}
+
+.sb-top-bar-frame .sb-top-bar .sb-right-side {
+    width: 71%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sb-menu-transition {
+    opacity: 1;
+    transition: 0.1s ease-in-out;
+}
+
+
 
 </style>
