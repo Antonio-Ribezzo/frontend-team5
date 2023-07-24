@@ -21,13 +21,13 @@ import { RouterLink } from 'vue-router';
                     <div class="collapse navbar-collapse mx-auto" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <router-link :to="{ name: 'AppHome'}" class="nav-link sb-menu-item sb-mb-30 text-decoration-none">Home</router-link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Register your Restaurant</a>
+                                <a class="nav-link" href="http://127.0.0.1:8000/register">Register your Restaurant</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Login</a>
+                                <a class="nav-link" href="http://127.0.0.1:8000/login">Login</a>
                             </li>
                         </ul>
                     </div>

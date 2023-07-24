@@ -13,7 +13,7 @@ routes: [
         component: AppHome
     },
     {
-        path: '/restaurant/:slug',
+        path: '/restaurant/:slug/:id',
         name: 'restaurant',
         component: singleRestaurant
     },

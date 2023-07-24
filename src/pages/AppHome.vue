@@ -72,7 +72,7 @@ export default {
         <div class="row">
 
             <div v-for="(elem, index) in restaurants" :key="index" class="col-lg-3">
-                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug} , id: elem.id }" class="sb-menu-item sb-mb-30 text-decoration-none">                    
+                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug, id: elem.id } }" class="sb-menu-item sb-mb-30 text-decoration-none">                    
                     <div class="sb-cover-frame">
                         <img :src="`http://127.0.0.1:8000/storage/${elem.restaurant_image}`" :alt="index">
                     </div>
