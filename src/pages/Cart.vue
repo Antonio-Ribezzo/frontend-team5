@@ -58,7 +58,7 @@ export default {
         {{ item.name }} - Quantity: {{ item.quantity }} - Price: €{{ item.quantity === 1 ? item.price : item.quantity * item.price }}
         <i @click="deleteFromCart(item)" class="fa-solid fa-trash"></i>
       </li>
-      <h3 v-if="cartItems.length > 0">Totale: €{{ calculateTotalPrice() }}</h3>
+      <h3 v-if="cartItems.length > 0">Totale: €{{ calculateTotalPrice().toFixed(2) }}</h3>
     </ul>
   </div>
 </template>
