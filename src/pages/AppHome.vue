@@ -29,6 +29,7 @@ export default {
         getRestaurants() {
 
             const params = {}
+            const id = {}
 
             if (this.selectedTypes.length > 0) {
                 params.type_id = this.selectedTypes.join(',')
@@ -54,7 +55,7 @@ export default {
 <template>
     <!-- checkbox Types  -->
     <div class="container my-3">
-        <button type="button" class="fs-6 btn bg-success form-select form-select-sm" data-bs-toggle="collapse"
+        <button type="button" class="mb-5 fs-6 btn bg-success form-select form-select-sm" data-bs-toggle="collapse"
             data-bs-target="#collapseTypes" role="button" aria-expanded="false" aria-controls="collapseTypes">
             <span>Types</span>
         </button>
@@ -71,31 +72,19 @@ export default {
         <div class="row">
 
             <div v-for="(elem, index) in restaurants" :key="index" class="col-lg-3">
-                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }" class="sb-menu-item sb-mb-30 text-decoration-none">                    
+                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug} , id: elem.id }" class="sb-menu-item sb-mb-30 text-decoration-none">                    
                     <div class="sb-cover-frame">
                         <img :src="`http://127.0.0.1:8000/storage/${elem.restaurant_image}`" :alt="index">
                     </div>
 
                     <div class="sb-card-tp">
                         <h4 class="sb-card-title black">{{ elem.name }}</h4>
-                        <div class="sb-price">
-                            <sub>€</sub>{{ elem.price }}
-                        </div>
                     </div>
 
                 </router-link>
             </div>
 
         </div>
-
-
-
-
-        <ul class="mt-4">
-            <li v-for="(elem, index) in restaurants" :key="index">
-                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }">{{ elem.name }}</router-link>
-            </li>
-        </ul>
     </div>
 </template>
 
@@ -147,7 +136,7 @@ export default {
 }
 
 .sb-menu-item .sb-card-tp .sb-card-title {
-    width: calc(100% - 90px);
+    // width: calc(100% - 90px);
     overflow: hidden;
     text-overflow: ellipsis;
     display: -moz-box;

@@ -1,7 +1,10 @@
 <script>
+
+import { RouterLink } from 'vue-router';
     export default {
-        name: 'headerComp'
-    }
+    name: "headerComp",
+    components: { RouterLink }
+}
 </script>
 
 <template>
