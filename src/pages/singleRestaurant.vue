@@ -64,7 +64,7 @@ export default {
                 if (cartItem) {
                     cartItem.quantity++;
                 } else {
-                    cartItems.push({ id: item.id, name: item.name, quantity: 1 });
+                    cartItems.push({ id: item.id, name: item.name, quantity: 1, price: item.price});
                 }
 
                 // Salva i dati aggiornati nel localStorage

@@ -1,10 +1,12 @@
 <script>
+import { store } from '../store';
+
 export default {
     name: 'Cart',
     data() {
         return {
             cartItems: [],
-            restaurantId: null,
+            store,
         }
     },
     created() {
@@ -46,7 +48,7 @@ export default {
     <h2>Carrello</h2>
     <ul>
       <li v-for="item in cartItems" :key="item.id">
-        {{ item.name }} - Quantity: {{ item.quantity }} - Price: {{ item.price }}
+        {{ item.name }} - Quantity: {{ item.quantity }} - Price: €{{ item.quantity === 1 ? item.price : item.quantity * item.price }}
         <i @click="deleteFromCart(item)" class="fa-solid fa-trash"></i>
       </li>
     </ul>
