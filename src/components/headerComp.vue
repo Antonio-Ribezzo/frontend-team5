@@ -9,7 +9,7 @@
     <div>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container d-flex justify-content-between">
-                <a class="navbar-brand me-auto" href="#">Navbar</a>
+                <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="" class="navbar-brand me-auto" href="#" width="200px">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
