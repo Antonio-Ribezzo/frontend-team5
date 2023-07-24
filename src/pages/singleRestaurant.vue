@@ -31,7 +31,9 @@ export default {
             });
         },
         getItems(){
+            
             //http://127.0.0.1:8000/api/restaurants/2/items
+
             axios.get(`${this.store.baseUrl}/restaurants/${this.$route.params.id}/items`).then((response) => {
                 console.log(response.data.items)
                  this.restaurant_items = response.data.items;

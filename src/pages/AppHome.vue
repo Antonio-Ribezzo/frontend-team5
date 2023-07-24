@@ -53,6 +53,23 @@ export default {
 </script>
 
 <template>
+
+    <!-- hero section -->
+    <section id="hero" class="bg-darker bg-position-center py-5 py-lg-10">
+        <div class="container py-5 my-5">
+            <div class="row justify-content-center pb-5">
+                <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 text-center">
+                    <h5 class="text-light fw-light">#1 Food Delivery Service since 2010</h5>
+                    <div class="h1 text-light mb-3 pb-4">We deliver your favorite food fresh &amp; fast in
+                        <div class="d-inline-block">
+                            <a  class="text-decoration-none text-white" href="#">Roma</a>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </section>
+
     <!-- checkbox Types  -->
     <div class="container my-3">
         <button type="button" class="mb-5 fs-6 btn bg-success form-select form-select-sm" data-bs-toggle="collapse"
@@ -164,6 +181,13 @@ export default {
 .sb-menu-item .sb-card-tp .sb-price sub {
     font-size: 12px;
     font-weight: 400;
+}
+
+#hero{
+    background-image: url('../../public/img/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 35rem;
 }
 
 </style>
