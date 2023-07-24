@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AppHome from './pages/AppHome.vue';
 import NotFound from './pages/NotFound.vue';
 import singleRestaurant from './pages/singleRestaurant.vue';
+import Cart from './pages/Cart.vue'
 
 
 const router = createRouter({
@@ -18,10 +19,16 @@ routes: [
         component: singleRestaurant
     },
     {
+        path: "/cart",
+        name: 'cart',
+        component: Cart
+    },
+    {
         path: "/:pathMatch(.*)*",
         name: 'NotFound',
         component: NotFound
     },
+
 ]
 });
 export { router };

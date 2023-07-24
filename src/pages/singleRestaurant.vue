@@ -10,7 +10,8 @@ export default {
         return {
             restaurant:[],
             restaurant_items:[],
-            store
+            store,
+            restaurantId: null,
         }
     },
     mounted(){
@@ -46,7 +47,30 @@ export default {
 
                  }
              });
-         }
+         },
+         addToCart(item){
+
+            // Controlla se l'ID del ristorante è già stato impostato
+      if (this.restaurantId !== null && this.restaurantId !== item.restaurant_id) {
+        alert('Puoi aggiungere elementi solo da un singolo ristorante al carrello.');
+        return;
+      }
+
+      // Aggiungi l'elemento al carrello nel LocalStorage
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+      if (cartItem) {
+        cartItem.quantity++;
+      } else {
+        cartItems.push({ id: item.id, name: item.name, quantity: 1 });
+      }
+
+      // Imposta l'ID del ristorante nel componente e nel LocalStorage
+      this.restaurantId = item.restaurant_id;
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      localStorage.setItem('restaurantId', this.restaurantId);
+        }
     }
 }
 </script>
@@ -74,8 +98,9 @@ export default {
                                 <sub>€</sub>{{elem.price}}
                             </div>
                         </div>
-
+                        
                     </router-link>
+                    <div class="btn btn-primary" @click="addToCart(elem)">Add to cart</div>
                 </div>
 
             </div>

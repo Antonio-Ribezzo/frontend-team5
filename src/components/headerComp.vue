@@ -33,7 +33,7 @@ import { RouterLink } from 'vue-router';
                     </div>
 
                     <div class="ms-lg-3 align-self-center ms-3">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <router-link :to="{ name: 'cart'}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></router-link>
                     </div>
                 </div>
             </div>
