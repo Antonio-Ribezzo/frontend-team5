@@ -36,11 +36,18 @@ export default {
           // Aggiorna la visualizzazione del carrello (se necessario)
           // Puoi aggiungere qui la logica per aggiornare l'interfaccia utente del carrello
 
-          location.reload(); // Ricarica la pagina per aggiornare il componente
+          this.cartItems = cartItems;
         }
-      }
+      },
+      calculateTotalPrice(){
+      let total = 0;
+        for (const item of this.cartItems) {
+          total += item.quantity * item.price;
+        }
+      return total;
     }
   }
+}
 </script>
 
 <template>
@@ -51,6 +58,7 @@ export default {
         {{ item.name }} - Quantity: {{ item.quantity }} - Price: €{{ item.quantity === 1 ? item.price : item.quantity * item.price }}
         <i @click="deleteFromCart(item)" class="fa-solid fa-trash"></i>
       </li>
+      <h3 v-if="cartItems.length > 0">Totale: €{{ calculateTotalPrice() }}</h3>
     </ul>
   </div>
 </template>
