@@ -71,16 +71,13 @@ export default {
     </section>
 
     <!-- checkbox Types  -->
-    <div class="container my-3">
-        <!-- <button type="button" class="mb-5 fs-6 btn bg-success form-select form-select-sm" data-bs-toggle="collapse"
-            data-bs-target="#collapseTypes" role="button" aria-expanded="false" aria-controls="collapseTypes">
-            <span>Types</span>
-        </button> -->
-        <div id="collapseTypes" class="mt-2 p-4 rounded">
+    <div class="container my-5">
+        <h2 class="text-center">Select Categories</h2>
+        <div class="mt-2 p-4 rounded">
             <div class="rounded d-flex justify-content-center align-items-center flex-wrap">
                 <label v-for="(elem, index) in types" :key="index" :for="elem.name" class="rounded-circle d-flex justify-content-center align-items-center text-white text-center" :class="(elem.name == 'Pizza')? 'pizza': (elem.name == 'Chinese Cuisine')? 'chinese': (elem.name == 'Kebab')? 'kebab': (elem.name == 'Ice Cream')? 'ice-cream': (elem.name == 'Hamburger and Sandwich')? 'hamburger':(elem.name == 'Breakfast')? 'breakfast':(elem.name == 'Sushi')? 'sushi': (elem.name == 'Italian Cuisine')? 'spaghetti':''">
-                    <input type="checkbox" :value="elem.id" v-model="selectedTypes" :id="elem.name">
-                    <span class="d-none">{{ elem.name }}</span>
+                    <input type="checkbox" :value="elem.id" v-model="selectedTypes" :id="elem.name" >
+                    <span v-if="selectedTypes.includes(elem.id)" class="customMark rounded-circle">&#10003;</span>
                 </label>
             </div>
         </div>
@@ -89,15 +86,13 @@ export default {
         <div class="row">
 
             <div v-for="(elem, index) in restaurants" :key="index" class="col-lg-3">
-                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug, id: elem.id } }" class="sb-menu-item sb-mb-30 text-decoration-none">                    
-                    <div class="sb-cover-frame">
-                        <img :src="`http://127.0.0.1:8000/storage/${elem.restaurant_image}`" :alt="index">
+                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug, id: elem.id } }" class="sb-menu-item sb-mb-30 text-decoration-none"> 
+                    <div class="card text-bg-dark">
+                        <img class="bd-placeholder-img bd-placeholder-img-lg card-img" width="100%" height="270" :src="`http://127.0.0.1:8000/storage/${elem.restaurant_image}`" :alt="index">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                          <h2 class="card-title text-center text-white">{{ elem.name }}</h2>
+                        </div>
                     </div>
-
-                    <div class="sb-card-tp">
-                        <h4 class="sb-card-title black">{{ elem.name }}</h4>
-                    </div>
-
                 </router-link>
             </div>
 
@@ -107,80 +102,15 @@ export default {
 
 <style lang="scss" scoped>
 
-.sb-menu-item .sb-card-tp {
-    margin-bottom: 15px;
-    padding-left: 15px;
-    background-color: #F2F3F5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.sb-menu-item .sb-cover-frame {
-    display: block;
-    background-color: #F2F3F5;
-    overflow: hidden;
-    position: relative;
-    padding-bottom: 100%;
-    transition: 0.3s ease-in-out;
-}
-
-.sb-menu-item .sb-cover-frame img {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    right: 0;
-    transform: scale(1.001);
-    transition: 0.3s ease-in-out;
-    &:hover {
-        scale: 105%;
+.card{
+    &:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    scale: 105%;
     }
-}
-
-.sb-menu-item .sb-card-tp {
-    margin-bottom: 15px;
-    padding-left: 15px;
-    background-color: #F2F3F5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: black;
-}
-
-.sb-menu-item .sb-card-tp .sb-card-title {
-    // width: calc(100% - 90px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -moz-box;
-    -moz-box-orient: vertical;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    line-clamp: 1;
-    box-orient: vertical;
-    font-weight: 600;
-    color: black;
-}
-.sb-menu-item .sb-card-tp .sb-price {
-    width: 60px;
-    height: 60px;
-    font-weight: 500;
-    background-color: #F5C332;
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-}
-
-.sb-menu-item .sb-card-tp .sb-price sub {
-    font-size: 12px;
-    font-weight: 400;
+    
+    img{
+        filter: brightness(60%);
+    }
 }
 
 #hero{
@@ -199,20 +129,29 @@ label{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    .customMark{
+        font-size: 3rem;
+        color: green;
+        background-color: rgba(0, 0, 0, 0.305);
+        width: 100%;
+        height: 100%;
+    }
     &:hover{
         scale: 105%;
     }
     input{
-      display: none;
+        display: none;
+    }
+}
+
+.pizza,.chinese,.breakfast,.ice-cream,.hamburger,.sushi,.kebab,.spaghetti{
+    &:hover{
+        filter:brightness(60%);
     }
 }
 
 .pizza{
     background-image: url('img/pizza.png');
-    &:hover{
-        scale: 105%;
-        filter:brightness(50%);
-    }
 }
 
 .chinese{
