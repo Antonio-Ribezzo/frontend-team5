@@ -72,15 +72,15 @@ export default {
 
     <!-- checkbox Types  -->
     <div class="container my-3">
-        <button type="button" class="mb-5 fs-6 btn bg-success form-select form-select-sm" data-bs-toggle="collapse"
+        <!-- <button type="button" class="mb-5 fs-6 btn bg-success form-select form-select-sm" data-bs-toggle="collapse"
             data-bs-target="#collapseTypes" role="button" aria-expanded="false" aria-controls="collapseTypes">
             <span>Types</span>
-        </button>
-        <div id="collapseTypes" class="collapse mt-2 p-4 rounded">
-            <div class="rounded">
-                <label v-for="(elem, index) in types" :key="index" :for="elem.name" class="me-2">
-                    <input class="me-1" type="checkbox" :value="elem.id" v-model="selectedTypes" :id="elem.name">{{
-                        elem.name }}
+        </button> -->
+        <div id="collapseTypes" class="mt-2 p-4 rounded">
+            <div class="rounded d-flex justify-content-center align-items-center flex-wrap">
+                <label v-for="(elem, index) in types" :key="index" :for="elem.name" class="rounded-circle d-flex justify-content-center align-items-center text-white text-center" :class="(elem.name == 'Pizza')? 'pizza': (elem.name == 'Chinese Cuisine')? 'chinese': (elem.name == 'Kebab')? 'kebab': (elem.name == 'Ice Cream')? 'ice-cream': (elem.name == 'Hamburger and Sandwich')? 'hamburger':(elem.name == 'Breakfast')? 'breakfast':(elem.name == 'Sushi')? 'sushi': (elem.name == 'Italian Cuisine')? 'spaghetti':''">
+                    <input type="checkbox" :value="elem.id" v-model="selectedTypes" :id="elem.name">
+                    <span class="d-none">{{ elem.name }}</span>
                 </label>
             </div>
         </div>
@@ -188,6 +188,55 @@ export default {
     background-size: cover;
     background-position: center;
     height: 35rem;
+}
+
+
+label{
+    height: 80px;
+    width: 80px;
+    cursor: pointer;
+    margin: 1rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    &:hover{
+        scale: 105%;
+    }
+    input{
+      display: none;
+    }
+}
+
+.pizza{
+    background-image: url('img/pizza.png');
+    &:hover{
+        scale: 105%;
+        filter:brightness(50%);
+    }
+}
+
+.chinese{
+    background-image: url('img/chinese.png');
+}
+.breakfast{
+    background-image: url('img/breakfast.png');
+}
+.ice-cream{
+    background-image: url('img/ice-cream.png');
+}
+.hamburger{
+    background-image: url('img/hamburger.png');
+}
+.sushi{
+    background-image: url('img/sushi.png');
+}
+
+.kebab{
+    background-image: url('img/kebab.png');
+}
+
+.spaghetti{
+    background-image: url('img/spaghetti.png');
 }
 
 </style>
