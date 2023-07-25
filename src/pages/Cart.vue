@@ -53,7 +53,7 @@ export default {
 </script>
 
 <template>
-   <div>
+   <div class="container my-4">
     <h2>Carrello</h2>
     <ul>
       <li v-for="item in cartItems" :key="item.id">
