@@ -6,12 +6,15 @@ export default {
   data() {
     return {
       cartItems: [],
+      restaurant: [],
+      restaurant_items: [],
       store,
     }
   },
   created() {
     // Recupera i dati del carrello dal LocalStorage quando il componente è creato
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    console.log(this.cartItems);
   },
   mounted() {
 
@@ -41,23 +44,6 @@ export default {
         this.cartItems = cartItems;
       }
     },
-    getItems() {
-
-      //http://127.0.0.1:8000/api/restaurants/2/items
-
-      axios.get(`${this.store.baseUrl}/restaurants/${this.$route.params.id}/items`).then((response) => {
-        console.log(response.data.items)
-        this.restaurant_items = response.data.items;
-        console.log(this.restaurant_items)
-        //console.log(this.$route)
-      }, error => {
-        if (error.response.status === 404) {
-          this.$router.push({ name: 'NotFound' })
-        } else {
-
-        }
-      });
-    },
     calculateTotalPrice() {
       let total = 0;
       for (const item of this.cartItems) {
@@ -69,8 +55,9 @@ export default {
 }
 </script>
 
+
 <template>
-  <section class="h-100 h-custom" style="background-color: #f0e900;">
+  <section class="h-100 h-custom" style="background-color: #f5c332;">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12">
@@ -82,14 +69,16 @@ export default {
                     <div class="d-flex justify-content-between align-items-center mb-5">
                       <h1 class="fw-bold mb-0 text-black"> Cart</h1>
                     </div>
-                    <hr class="my-4">
+                    <hr class="border border-2 border-dark">
 
                     <div v-for="item in cartItems" :key="item.id">
 
                       <div class="row mb-4 d-flex justify-content-between align-items-center">
                         <div class="col-md-2 col-lg-2 col-xl-2">
-                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp"
-                            class="img-fluid rounded-3" alt="Cotton T-shirt">
+                          <div>
+                            <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" :alt="index"
+                              class="w-100 rounded-3 border border-1 border-dark">
+                          </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3">
                           <h6 class="text-muted">Shirt</h6>
@@ -111,6 +100,7 @@ export default {
                           <i @click="deleteFromCart(item)" class="fa-solid fa-trash"></i>
                         </div>
                       </div>
+                      <hr class="border border-2 border-dark">
                     </div>
 
 

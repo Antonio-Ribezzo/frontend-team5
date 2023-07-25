@@ -65,7 +65,7 @@ export default {
                     cartItem.quantity++;
                     this.store.CartCounter++;
                 } else {
-                    cartItems.push({ id: item.id, name: item.name, quantity: 1, price: item.price });
+                    cartItems.push({ id: item.id, name: item.name, quantity: 1, price: item.price, cover_image: item.cover_image });
                     this.store.CartCounter++;
 
                 }
