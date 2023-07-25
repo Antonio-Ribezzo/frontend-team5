@@ -5,19 +5,19 @@ import axios from 'axios';
 
 
 export default {
-    name:"singleRestaurant",
-    data () {
+    name: "singleRestaurant",
+    data() {
         return {
-            restaurant:[],
-            restaurant_items:[],
+            restaurant: [],
+            restaurant_items: [],
             store,
         }
     },
-    mounted(){
+    mounted() {
         this.getSingleRestaurant()
         this.getItems()
     },
-    methods:{
+    methods: {
         getSingleRestaurant() {
             axios.get(`${this.store.baseUrl}/restaurants/${this.$route.params.slug}`).then((response) => {
                 this.restaurant = response.data.restaurant;
@@ -26,28 +26,28 @@ export default {
                 if (error.response.status === 404) {
                     this.$router.push({ name: 'NotFound' })
                 } else {
-                    
+
                 }
             });
         },
-        getItems(){
-            
+        getItems() {
+
             //http://127.0.0.1:8000/api/restaurants/2/items
 
             axios.get(`${this.store.baseUrl}/restaurants/${this.$route.params.id}/items`).then((response) => {
                 console.log(response.data.items)
-                 this.restaurant_items = response.data.items;
-                 console.log(this.restaurant_items)
-                 //console.log(this.$route)
-             }, error => {
-                 if (error.response.status === 404) {
-                     this.$router.push({ name: 'NotFound' })
-                 } else {
+                this.restaurant_items = response.data.items;
+                console.log(this.restaurant_items)
+                //console.log(this.$route)
+            }, error => {
+                if (error.response.status === 404) {
+                    this.$router.push({ name: 'NotFound' })
+                } else {
 
-                 }
-             });
-         },
-         addToCart(item) {
+                }
+            });
+        },
+        addToCart(item) {
 
             const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
@@ -65,7 +65,7 @@ export default {
                     cartItem.quantity++;
                     this.store.CartCounter++;
                 } else {
-                    cartItems.push({ id: item.id, name: item.name, quantity: 1, price: item.price});
+                    cartItems.push({ id: item.id, name: item.name, quantity: 1, price: item.price });
                     this.store.CartCounter++;
 
                 }
@@ -73,12 +73,12 @@ export default {
                 // Salva i dati aggiornati nel localStorage
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-                } else {
-                    alert('Puoi aggiungere elementi solo da un singolo ristorante al carrello.');
-                    return;
-                }
+            } else {
+                alert('Puoi aggiungere elementi solo da un singolo ristorante al carrello.');
+                return;
             }
-        
+        }
+
 
         //         if (cartItem) {
         //             cartItem.quantity++;
@@ -94,44 +94,45 @@ export default {
         //     }
         // }
 
-            // // Controlla se l'ID del ristorante è già stato impostato
-            // if (this.restaurantId !== null && this.restaurantId !== item.restaurant_id) {
-            //   alert('Puoi aggiungere elementi solo da un singolo ristorante al carrello.');
-            //   return;
-            // }
+        // // Controlla se l'ID del ristorante è già stato impostato
+        // if (this.restaurantId !== null && this.restaurantId !== item.restaurant_id) {
+        //   alert('Puoi aggiungere elementi solo da un singolo ristorante al carrello.');
+        //   return;
+        // }
 
-            // // Aggiungi l'elemento al carrello nel LocalStorage
-            // const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-            // const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+        // // Aggiungi l'elemento al carrello nel LocalStorage
+        // const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
 
-            // if (cartItem) {
-            //   cartItem.quantity++;
-            // } else {
-            //   cartItems.push({ id: item.id, name: item.name, quantity: 1 });
-            // }
+        // if (cartItem) {
+        //   cartItem.quantity++;
+        // } else {
+        //   cartItems.push({ id: item.id, name: item.name, quantity: 1 });
+        // }
 
-            // // Imposta l'ID del ristorante nel componente e nel LocalStorage
-            // this.restaurantId = item.restaurant_id;
-            // localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            // localStorage.setItem('restaurantId', this.restaurantId);
-        }
+        // // Imposta l'ID del ristorante nel componente e nel LocalStorage
+        // this.restaurantId = item.restaurant_id;
+        // localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        // localStorage.setItem('restaurantId', this.restaurantId);
     }
+}
 
 </script>
 
 
 <template>
     <div>
-         <div class="container">
+        <div class="container">
             <h1 v-if="restaurant" class="text-center my-5"> {{ restaurant.name }} </h1>
             <p v-if="restaurant"> <b>address: </b> {{ restaurant.address }} </p>
 
             <h1 class="text-center my-5 text-black">MENU</h1>
-            
+
             <div class="row">
 
                 <div v-for="(elem, index) in restaurant_items" :key="index" class="col-lg-3">
-                    <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }" class="sb-menu-item sb-mb-30 text-decoration-none">                    
+                    <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }"
+                        class="sb-menu-item sb-mb-30 text-decoration-none">
                         <div class="sb-cover-frame">
                             <img :src="`http://127.0.0.1:8000/storage/${elem.cover_image}`" :alt="index" class="w-100">
                         </div>
@@ -139,10 +140,10 @@ export default {
                         <div class="sb-card-tp">
                             <h4 class="sb-card-title black">{{ elem.name }}</h4>
                             <div class="sb-price">
-                                <sub>€</sub>{{elem.price}}
+                                <sub>€</sub>{{ elem.price }}
                             </div>
                         </div>
-                        
+
                     </router-link>
                     <div class="btn btn-primary" @click="addToCart(elem)">Add to cart</div>
                 </div>
@@ -155,7 +156,6 @@ export default {
 
 
 <style lang="scss" scoped>
-
 .sb-menu-item .sb-card-tp {
     margin-bottom: 15px;
     padding-left: 15px;
@@ -186,6 +186,7 @@ export default {
     right: 0;
     transform: scale(1.001);
     transition: 0.3s ease-in-out;
+
     &:hover {
         scale: 105%;
     }
@@ -215,6 +216,7 @@ export default {
     font-weight: 600;
     color: black;
 }
+
 .sb-menu-item .sb-card-tp .sb-price {
     width: 60px;
     height: 60px;
@@ -231,5 +233,4 @@ export default {
     font-size: 12px;
     font-weight: 400;
 }
-
 </style>
