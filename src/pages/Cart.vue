@@ -25,9 +25,11 @@ export default {
           if (cartItems[cartItemIndex].quantity > 1) {
             // Rimuovi una quantità se è maggiore di 1
             cartItems[cartItemIndex].quantity--;
+            this.store.CartCounter--;
           } else {
             // Rimuovi completamente l'elemento se la quantità è 1
             cartItems.splice(cartItemIndex, 1);
+            this.store.CartCounter--;
           }
         
           // Salva i dati aggiornati nel localStorage

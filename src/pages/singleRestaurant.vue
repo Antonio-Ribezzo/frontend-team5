@@ -63,8 +63,11 @@ export default {
 
                 if (cartItem) {
                     cartItem.quantity++;
+                    this.store.CartCounter++;
                 } else {
                     cartItems.push({ id: item.id, name: item.name, quantity: 1, price: item.price});
+                    this.store.CartCounter++;
+
                 }
 
                 // Salva i dati aggiornati nel localStorage

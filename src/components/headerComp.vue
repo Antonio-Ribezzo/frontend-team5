@@ -1,9 +1,16 @@
 <script>
 
 import { RouterLink } from 'vue-router';
+import { store } from '../store';
+
     export default {
     name: "headerComp",
-    components: { RouterLink }
+    components: { RouterLink },
+    data() {
+        return {
+            store,
+        }
+    },
 }
 </script>
 
@@ -12,7 +19,7 @@ import { RouterLink } from 'vue-router';
     <div>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container d-flex justify-content-between">
-                <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="" class="navbar-brand me-auto" href="#" width="200px">
+                <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="" class="navbar-brand me-auto" href="#" width="200">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -33,7 +40,13 @@ import { RouterLink } from 'vue-router';
                     </div>
 
                     <div class="ms-lg-3 align-self-center ms-3">
-                        <router-link :to="{ name: 'cart'}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></router-link>
+                        <router-link :to="{ name: 'cart'}" class="nav-link">
+                            <i class="fa-solid fa-cart-shopping position-relative" style="width: 30px;"> 
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                  {{ this.store.CartCounter }}
+                                </span>
+                            </i>
+                        </router-link>
                     </div>
                 </div>
             </div>
