@@ -2,6 +2,8 @@
 import { store } from '../store';
 import paymentComp from '../components/paymentComp.vue';
 import axios from 'axios';
+import braintree from 'braintree-web';
+
 
 
 export default {
@@ -15,6 +17,12 @@ export default {
       restaurant: [],
       restaurant_items: [],
       tokenApi: "",
+      detailsItems:[],
+      nameSurname: "",
+      mobileNumber:"",
+      address: "",
+      email: "",
+      notes: "",
       store,
       baseUrl: "http://127.0.0.1:8000/"
     }
@@ -24,10 +32,54 @@ export default {
     this.cartItems = JSON.parse(localStorage.getItem('cartItems'))||[];
     console.log(this.cartItems);
   },
-  async mounted() {
-    let response = await axios.get(`${ this.baseUrl }api/orders/generate`);
-    this.tokenApi = response.data.token
-    console.log(this.tokenApi)
+  mounted() {
+    // let response = await axios.get(`${ this.baseUrl }api/orders/generate`);
+    // this.tokenApi = response.data.token
+    // console.log(this.tokenApi)
+
+     axios.get(`${this.baseUrl}api/make/payment`).then((resp) => {
+
+
+      braintree.client.create({
+        authorization: resp.data.token
+
+      })
+        .then(clientInstance => {
+          let options = {
+            client: clientInstance,
+            styles: {
+              input: {
+                'font-size': '15px',
+                'font-family': 'Open Sans'
+              }
+            },
+            fields: {
+              number: {
+                selector: '#creditCardNumber',
+                placeholder: '0000-0000-0000-0000'
+              },
+              cvv: {
+                selector: '#cvv',
+                placeholder: '123'
+              },
+              expirationDate: {
+                selector: '#expireDate',
+                placeholder: '00 / 00'
+              }
+            }
+          }
+          return braintree.hostedFields.create(options)
+        })
+        .then(hostedFieldInstance => {
+          // @TODO - Use hostedFieldInstance to send data to Braintree
+          this.hostedFieldInstance = hostedFieldInstance;
+        })
+        .catch(err => {
+        });
+
+     })
+
+
   },
   methods: {
     deleteFromCart(item) {
@@ -62,9 +114,55 @@ export default {
         total += item.quantity * item.price;
       }
       return total;
-    }
+    },
+    getIdQuantity() {
+      this.cartItems.forEach(items => {
+        const dishes = {
+          id: items.id,
+          quantity: items.quantity,
+        }
+        this.detailsItems.push(dishes);
+
+      })
+    },
+    clearCart() {
+      localStorage.clear();
+    },
+    sendPayment() {
+
+      // console.log(this.hostedFieldInstance)
+      // if (this.hostedFieldInstance) {
+      //   this.getIdQuantity();
+
+      //   this.hostedFieldInstance.tokenize().then(payload => {
+          axios.post(`${this.baseUrl}api/make/payment`, {
+
+            // array oggetti id quantità
+            cart: this.detailsItems,
+            // token
+            // token: payload.nonce,
+            // array oggetto user
+            customer_name_surname: this.nameSurname,
+            customer_mobile_number: this.mobileNumber,
+            customer_address: this.address,
+            customer_notes: this.notes,
+            customer_email: this.email,
+
+
+
+          }).then(resp => {
+            this.cartItems.clearCart();
+            this.$router.push({ path: '/', query: { success: true } });
+            console.log(resp);
+          })
+    //     })
+    //       .catch(err => {
+    //         console.error(err);
+    //       })
+    //   }
+    // },
   }
-}
+}}
 </script>
 
 
@@ -131,24 +229,29 @@ export default {
 
                         <form class="mt-4">
                           <div class="form-group mb-3">
+                            <label class="form-label">Name and Surname</label>
+                            <input type="text" class="form-control" name="name_surname" v-model="nameSurname">
+                          </div>
+                          
+                          <div class="form-group mb-3">
                             <label class="form-label">Address</label>
-                            <input type="text" class="form-control" name="customer_address">
+                            <input type="text" class="form-control" name="customer_address"  v-model="address">
                           </div>
 
                           <div class="form-group mb-3">
                             <label class="form-label">Mobile number</label>
-                            <input type="text" id="Vat" required class="form-control" name="mobile_number">
+                            <input type="text" id="Vat" required class="form-control" name="mobile_number" v-model="mobileNumber">
                           </div>
 
                           <div class="form-group mb-3">
                             <label class="form-label">Email</label>
-                            <input id="email" type="email" class="form-control" name="customer_mail" value=""
-                              autocomplete=" email" autofocus>
+                            <input id="email" type="email" class="form-control" name="customer_mail"
+                              autocomplete=" email" autofocus v-model="email">
                           </div>
 
                           <div class="form-group">
                             <label class="form-label">Note</label>
-                            <textarea name="" id="" required class="form-control" cols="30" rows="10"></textarea>
+                            <textarea name="" id="" required class="form-control" cols="30" rows="10" v-model="notes"></textarea>
                           </div>
 
                           <!-- <paymentComp :authorization="tokenApi" /> -->
@@ -162,7 +265,7 @@ export default {
                           <p class="mb-2">€{{ calculateTotalPrice().toFixed(2) }}</p>
                         </div>
 
-                        <button type="button" class="btn button-checkout btn-block btn-lg">
+                        <button type="button" class="btn button-checkout btn-block btn-lg" @click="sendPayment()">
                           <div class="d-flex justify-content-between">
                             <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
                             <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
