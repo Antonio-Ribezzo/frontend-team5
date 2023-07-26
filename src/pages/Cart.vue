@@ -93,7 +93,6 @@ export default {
                           </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3">
-                          <h6 class="text-muted">Shirt</h6>
                           <h6 class="text-black mb-0">{{ item.name }}</h6>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -117,15 +116,13 @@ export default {
 
 
                     <div class="pt-5">
-                      <h6 class="mb-0"><a href="#!" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back
-                          to shop</a></h6>
+                      <h6 class="mb-0"><router-link :to="{ name: 'AppHome' }" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back
+                          to shop</router-link></h6>
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-4 bg-grey">
                   <div class="p-5">
-                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-
                     <div class="card bc-bacground-summary text-white rounded-3">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -139,8 +136,6 @@ export default {
                         <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
 
                         <form class="mt-4">
-
-
                           <div class="form-group mb-3">
                             <label class="form-label">Address</label>
                             <input type="text" class="form-control" name="customer_address">
@@ -209,13 +204,8 @@ export default {
                             <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                           </div>
                         </button>
-
                       </div>
                     </div>
-
-
-
-
                   </div>
                 </div>
               </div>
@@ -243,5 +233,9 @@ export default {
 
 .transform:hover {
   transform: scale(1.1);
+}
+
+.fa-trash{
+  cursor: pointer;
 }
 </style>
