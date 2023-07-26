@@ -75,9 +75,10 @@ export default {
         <div class="mt-2 p-4 rounded">
             <div class="rounded d-flex justify-content-center align-items-center flex-wrap">
                 <label v-for="(elem, index) in types" :key="index" :for="elem.name"
-                    class="rounded-circle d-flex justify-content-center align-items-center text-white text-center category-icon"
+                    class="rounded-circle d-flex justify-content-center align-items-center text-white text-center"
                     :class="(elem.name == 'Pizza') ? 'pizza' : (elem.name == 'Chinese Cuisine') ? 'chinese' : (elem.name == 'Kebab') ? 'kebab' : (elem.name == 'Ice Cream') ? 'ice-cream' : (elem.name == 'Hamburger and Sandwich') ? 'hamburger' : (elem.name == 'Breakfast') ? 'breakfast' : (elem.name == 'Sushi') ? 'sushi' : (elem.name == 'Italian Cuisine') ? 'spaghetti' : ''">
                     <input type="checkbox" :value="elem.id" v-model="selectedTypes" :id="elem.name">
+                    <span v-if="selectedTypes.includes(elem.id)" class="customMark rounded-circle">&#10003;</span>
                 </label>
             </div>
         </div>
