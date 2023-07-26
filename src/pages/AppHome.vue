@@ -53,7 +53,6 @@ export default {
 </script>
 
 <template>
-
     <!-- hero section -->
     <section id="hero" class="bg-darker bg-position-center py-5 py-lg-10">
         <div class="container py-5 my-5">
@@ -62,11 +61,11 @@ export default {
                     <h5 class="text-light fw-light">#1 Food Delivery Service since 2010</h5>
                     <div class="h1 text-light mb-3 pb-4">We deliver your favorite food fresh &amp; fast in
                         <div class="d-inline-block">
-                            <a  class="text-decoration-none text-white" href="#">Roma</a>
+                            <a class="text-decoration-none text-white" href="#">Roma</a>
                         </div>
                     </div>
                 </div>
-            </div>          
+            </div>
         </div>
     </section>
 
@@ -75,9 +74,10 @@ export default {
         <h2 class="text-center">Select Categories</h2>
         <div class="mt-2 p-4 rounded">
             <div class="rounded d-flex justify-content-center align-items-center flex-wrap">
-                <label v-for="(elem, index) in types" :key="index" :for="elem.name" class="rounded-circle d-flex justify-content-center align-items-center text-white text-center" :class="(elem.name == 'Pizza')? 'pizza': (elem.name == 'Chinese Cuisine')? 'chinese': (elem.name == 'Kebab')? 'kebab': (elem.name == 'Ice Cream')? 'ice-cream': (elem.name == 'Hamburger and Sandwich')? 'hamburger':(elem.name == 'Breakfast')? 'breakfast':(elem.name == 'Sushi')? 'sushi': (elem.name == 'Italian Cuisine')? 'spaghetti':''">
-                    <input type="checkbox" :value="elem.id" v-model="selectedTypes" :id="elem.name" >
-                    <span v-if="selectedTypes.includes(elem.id)" class="customMark rounded-circle">&#10003;</span>
+                <label v-for="(elem, index) in types" :key="index" :for="elem.name"
+                    class="rounded-circle d-flex justify-content-center align-items-center text-white text-center category-icon"
+                    :class="(elem.name == 'Pizza') ? 'pizza' : (elem.name == 'Chinese Cuisine') ? 'chinese' : (elem.name == 'Kebab') ? 'kebab' : (elem.name == 'Ice Cream') ? 'ice-cream' : (elem.name == 'Hamburger and Sandwich') ? 'hamburger' : (elem.name == 'Breakfast') ? 'breakfast' : (elem.name == 'Sushi') ? 'sushi' : (elem.name == 'Italian Cuisine') ? 'spaghetti' : ''">
+                    <input type="checkbox" :value="elem.id" v-model="selectedTypes" :id="elem.name">
                 </label>
             </div>
         </div>
@@ -86,11 +86,13 @@ export default {
         <div class="row">
 
             <div v-for="(elem, index) in restaurants" :key="index" class="col-lg-3">
-                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug, id: elem.id } }" class="sb-menu-item sb-mb-30 text-decoration-none"> 
-                    <div class="card text-bg-dark">
-                        <img class="bd-placeholder-img bd-placeholder-img-lg card-img" width="100%" height="270" :src="`http://127.0.0.1:8000/storage/${elem.restaurant_image}`" :alt="index">
+                <router-link :to="{ name: 'restaurant', params: { slug: elem.slug, id: elem.id } }"
+                    class="sb-menu-item sb-mb-30 text-decoration-none">
+                    <div class="card text-bg-dark transform">
+                        <img class="bd-placeholder-img bd-placeholder-img-lg card-img" width="100%" height="270"
+                            :src="`http://127.0.0.1:8000/storage/${elem.restaurant_image}`" :alt="index">
                         <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                          <h2 class="card-title text-center text-white">{{ elem.name }}</h2>
+                            <h2 class="card-title text-center text-white">{{ elem.name }}</h2>
                         </div>
                     </div>
                 </router-link>
@@ -101,19 +103,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
-.card{
-    &:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    scale: 105%;
+.card {
+    &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
-    
-    img{
+
+    img {
         filter: brightness(60%);
     }
 }
 
-#hero{
+#hero {
     background-image: url('../../public/img/hero-bg.jpg');
     background-size: cover;
     background-position: center;
@@ -121,7 +121,7 @@ export default {
 }
 
 
-label{
+label {
     height: 80px;
     width: 80px;
     cursor: pointer;
@@ -129,54 +129,76 @@ label{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    .customMark{
+
+    .customMark {
         font-size: 3rem;
         color: green;
         background-color: rgba(0, 0, 0, 0.305);
         width: 100%;
         height: 100%;
     }
-    &:hover{
+
+    &:hover {
         scale: 105%;
     }
-    input{
+
+    input {
         display: none;
     }
 }
 
-.pizza,.chinese,.breakfast,.ice-cream,.hamburger,.sushi,.kebab,.spaghetti{
-    &:hover{
-        filter:brightness(60%);
+.pizza,
+.chinese,
+.breakfast,
+.ice-cream,
+.hamburger,
+.sushi,
+.kebab,
+.spaghetti {
+    &:hover {
+        filter: brightness(60%);
     }
 }
 
-.pizza{
+.pizza {
     background-image: url('img/pizza.png');
 }
 
-.chinese{
+.chinese {
     background-image: url('img/chinese.png');
 }
-.breakfast{
+
+.breakfast {
     background-image: url('img/breakfast.png');
 }
-.ice-cream{
+
+.ice-cream {
     background-image: url('img/ice-cream.png');
 }
-.hamburger{
+
+.hamburger {
     background-image: url('img/hamburger.png');
 }
-.sushi{
+
+.sushi {
     background-image: url('img/sushi.png');
 }
 
-.kebab{
+.kebab {
     background-image: url('img/kebab.png');
 }
 
-.spaghetti{
+.spaghetti {
     background-image: url('img/spaghetti.png');
 }
 
+.transform {
+    transition: transform 0.6s;
+    box-shadow: 2px 2px 5px black;
+}
+
+.transform:hover {
+    transform: scale(1.05);
+}
 </style>
 
