@@ -1,7 +1,12 @@
 <script>
 import { store } from '../store';
+import paymentComp from './components/paymentComp.vue';
+
 
 export default {
+  components: {
+    paymentComp
+  },
   name: 'Cart',
   data() {
     return {
