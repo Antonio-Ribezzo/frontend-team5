@@ -88,7 +88,7 @@ export default {
                       <div class="row mb-4 d-flex justify-content-between align-items-center">
                         <div class="col-md-2 col-lg-2 col-xl-2">
                           <div class="transform rounded-3">
-                            <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" :alt="index"
+                            <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image"
                               class="w-100 rounded-3 ">
                           </div>
                         </div>
@@ -129,12 +129,6 @@ export default {
                           <h5 class="mb-0">Card details</h5>
                         </div>
 
-                        <p class="small mb-2">Card type</p>
-                        <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-mastercard fa-2x me-2"></i></a>
-                        <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-visa fa-2x me-2"></i></a>
-                        <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-amex fa-2x me-2"></i></a>
-                        <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
-
                         <form class="mt-4">
                           <div class="form-group mb-3">
                             <label class="form-label">Address</label>
@@ -158,37 +152,7 @@ export default {
                           </div>
 
                           <!-- <paymentComp :authorization="tokenApi" /> -->
-
-
-                          <div class="form-outline form-white mb-4 mt-3">
-                            <label class="form-label" for="typeName">Cardholder's Name</label>
-                            <input id="typeName" class="form-control form-control-lg" siez="17"
-                              placeholder="Cardholder's Name" />
-                          </div>
-
-                          <div class="form-outline form-white mb-4">
-                            <label class="form-label" for="typeText">Card Number</label>
-                            <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
-                              placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
-                          </div>
-
-                          <div class="row mb-4">
-                            <div class="col-md-6">
-                              <div class="form-outline form-white">
-                                <input type="text" class="form-control form-control-lg" placeholder="MM/YYYY" size="7"
-                                  id="exp" minlength="7" maxlength="7" />
-                                <label class="form-label" for="typeExp">Expiration</label>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="form-outline form-white">
-                                <input type="password" id="typeText" class="form-control form-control-lg"
-                                  placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
-                                <label class="form-label" for="typeText">Cvv</label>
-                              </div>
-                            </div>
-                          </div>
-
+                         
                         </form>
 
                         <hr class="my-4">

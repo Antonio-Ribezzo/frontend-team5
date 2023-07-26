@@ -29,10 +29,10 @@ export default {
 <template>
     <div>
         <v-braintree 
-        :authorization="authorization"
-        @success="onSuccess"
-        @error="onError">
-    </v-braintree>
+            :authorization="authorization"
+            @success="onSuccess"
+            @error="onError">
+        </v-braintree>
     </div>
 </template>
 
