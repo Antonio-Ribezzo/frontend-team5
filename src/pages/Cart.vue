@@ -75,9 +75,9 @@ export default {
 
                       <div class="row mb-4 d-flex justify-content-between align-items-center">
                         <div class="col-md-2 col-lg-2 col-xl-2">
-                          <div>
+                          <div class="transform rounded-3">
                             <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" :alt="index"
-                              class="w-100 rounded-3 border border-1 border-dark">
+                              class="w-100 rounded-3 ">
                           </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3">
@@ -113,10 +113,6 @@ export default {
                 <div class="col-lg-4 bg-grey">
                   <div class="p-5">
                     <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                    <hr class="my-4">
-
-
-
 
                     <div class="card bc-bacground-summary text-white rounded-3">
                       <div class="card-body">
@@ -131,16 +127,39 @@ export default {
                         <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
 
                         <form class="mt-4">
-                          <div class="form-outline form-white mb-4">
-                            <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                              placeholder="Cardholder's Name" />
+
+
+                          <div class="form-group mb-3">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-control" name="customer_address">
+                          </div>
+
+                          <div class="form-group mb-3">
+                            <label class="form-label">Mobile number</label>
+                            <input type="text" id="Vat" required class="form-control" name="mobile_number">
+                          </div>
+
+                          <div class="form-group mb-3">
+                            <label class="form-label">Email</label>
+                            <input id="email" type="email" class="form-control" name="customer_mail" value=""
+                              autocomplete=" email" autofocus>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="form-label">Note</label>
+                            <textarea name="" id="" required class="form-control" cols="30" rows="10"></textarea>
+                          </div>
+
+                          <div class="form-outline form-white mb-4 mt-3">
                             <label class="form-label" for="typeName">Cardholder's Name</label>
+                            <input id="typeName" class="form-control form-control-lg" siez="17"
+                              placeholder="Cardholder's Name" />
                           </div>
 
                           <div class="form-outline form-white mb-4">
+                            <label class="form-label" for="typeText">Card Number</label>
                             <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
                               placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
-                            <label class="form-label" for="typeText">Card Number</label>
                           </div>
 
                           <div class="row mb-4">
@@ -169,10 +188,10 @@ export default {
                           <p class="mb-2">€{{ calculateTotalPrice().toFixed(2) }}</p>
                         </div>
 
-                        <button type="button" class="btn btn-info btn-block btn-lg">
+                        <button type="button" class="btn button-checkout btn-block btn-lg">
                           <div class="d-flex justify-content-between">
                             <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
-                            <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                            <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                           </div>
                         </button>
 
@@ -195,6 +214,19 @@ export default {
 
 <style lang="scss" scoped>
 .bc-bacground-summary {
-  background-color: rgb(18, 18, 18);
+  background-color: #111227;
+}
+
+.button-checkout {
+  background-color: #f5c332;
+}
+
+.transform {
+  transition: transform 0.5s;
+  box-shadow: 2px 2px 5px black;
+}
+
+.transform:hover {
+  transform: scale(1.1);
 }
 </style>
