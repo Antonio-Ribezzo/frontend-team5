@@ -11,6 +11,14 @@ import { store } from '../store';
             store,
         }
     },
+    computed: {
+        cartItemCount() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+            this.store.CartCounter = totalItems
+            return this.store.CartCounter;
+        }
+    }
 }
 </script>
 
@@ -43,7 +51,7 @@ import { store } from '../store';
                         <router-link :to="{ name: 'cart'}" class="nav-link">
                             <i class="fa-solid fa-cart-shopping position-relative"> 
                                 <span class="sb-cart-number">
-                                  {{ this.store.CartCounter }}
+                                  {{ cartItemCount }}
                                 </span>
                             </i>
                         </router-link>
@@ -52,9 +60,6 @@ import { store } from '../store';
             </div>
         </nav>
     </div>
-        
-    
-
 </template>
 
 <style lang="scss" scoped>

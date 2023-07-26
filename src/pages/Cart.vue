@@ -52,6 +52,8 @@ export default {
         // Puoi aggiungere qui la logica per aggiornare l'interfaccia utente del carrello
 
         this.cartItems = cartItems;
+        // Emetti l'evento personalizzato 'cart-item-deleted' con l'oggetto item rimosso come payload
+        this.$emit('cart-item-deleted', item);
       }
     },
     calculateTotalPrice() {
@@ -159,7 +161,6 @@ export default {
                             <label class="form-label">Note</label>
                             <textarea name="" id="" required class="form-control" cols="30" rows="10"></textarea>
                           </div>
-
 
                           <!-- <paymentComp :authorization="tokenApi" /> -->
 

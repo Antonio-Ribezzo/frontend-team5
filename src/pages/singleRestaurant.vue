@@ -11,7 +11,6 @@ export default {
             restaurant: [],
             restaurant_items: [],
             store,
-            upHere: null
         }
     },
     mounted() {
@@ -54,25 +53,38 @@ export default {
             const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
 
             if (cartItems.length === 0) {
-                this.store.restaurantId = null;
+                // Se il carrello è vuoto, imposta l'id del ristorante corrente
+                localStorage.setItem('currentRestaurantId', item.restaurant_id);
             }
 
-            //console.log(item);
-            if (this.store.restaurantId == null || this.store.restaurantId == item['restaurant_id']) {
+            const currentRestaurantId = localStorage.getItem('currentRestaurantId');
 
-                this.store.restaurantId = item['restaurant_id'];
+            //console.log(item);
+            if (currentRestaurantId == null || currentRestaurantId == item.restaurant_id) {
+
 
                 if (cartItem) {
                     cartItem.quantity++;
                     this.store.CartCounter++;
                 } else {
-                    cartItems.push({ id: item.id, name: item.name, quantity: 1, price: item.price, cover_image: item.cover_image });
+                    cartItems.push({ 
+                        id: item.id, 
+                        name: item.name, 
+                        quantity: 1, 
+                        price: item.price, 
+                        cover_image: item.cover_image, 
+                        restaurant_id:item.restaurant_id 
+                    });
                     this.store.CartCounter++;
 
+                    
                 }
 
                 // Salva i dati aggiornati nel localStorage
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+                // Aggiorna il contatore del carrello nell'headerComp utilizzando l'evento personalizzato
+                this.$emit('cart-updated');
 
             } else {
                 alert('Puoi aggiungere elementi solo da un singolo ristorante al carrello.');
