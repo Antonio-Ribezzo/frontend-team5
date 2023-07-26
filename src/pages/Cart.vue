@@ -1,6 +1,7 @@
 <script>
 import { store } from '../store';
 import paymentComp from '../components/paymentComp.vue';
+import axios from 'axios';
 
 
 export default {
@@ -13,20 +14,24 @@ export default {
       cartItems: [],
       restaurant: [],
       restaurant_items: [],
+      tokenApi: "",
       store,
+      baseUrl: "http://127.0.0.1:8000/"
     }
   },
   created() {
     // Recupera i dati del carrello dal LocalStorage quando il componente è creato
-    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    this.cartItems = JSON.parse(localStorage.getItem('cartItems'))||[];
     console.log(this.cartItems);
   },
-  mounted() {
-
+  async mounted() {
+    let response = await axios.get(`${ this.baseUrl }api/orders/generate`);
+    this.tokenApi = response.data.token
+    console.log(this.tokenApi)
   },
   methods: {
     deleteFromCart(item) {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartItems = JSON.parse(localStorage.getItem('cartItems'))||[];
       const cartItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
 
       if (cartItemIndex !== -1) {
@@ -154,6 +159,10 @@ export default {
                             <label class="form-label">Note</label>
                             <textarea name="" id="" required class="form-control" cols="30" rows="10"></textarea>
                           </div>
+
+
+                          <!-- <paymentComp :authorization="tokenApi" /> -->
+
 
                           <div class="form-outline form-white mb-4 mt-3">
                             <label class="form-label" for="typeName">Cardholder's Name</label>
