@@ -118,7 +118,7 @@ export default {
 }
 
 #hero {
-    background-image: url('../../public/img/hero-bg.jpg');
+    background-image: url('/img/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     height: 35rem;

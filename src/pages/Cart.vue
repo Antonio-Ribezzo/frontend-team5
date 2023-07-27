@@ -2,7 +2,6 @@
 import { store } from '../store';
 import paymentComp from '../components/paymentComp.vue';
 import axios from 'axios';
-import braintree from 'braintree-web';
 
 
 
@@ -37,47 +36,47 @@ export default {
     // this.tokenApi = response.data.token
     // console.log(this.tokenApi)
 
-    axios.get(`${this.baseUrl}api/make/payment`).then((resp) => {
+    // axios.get(`${this.baseUrl}api/make/payment`).then((resp) => {
 
 
-      braintree.client.create({
-        authorization: resp.data.token
+    //   braintree.client.create({
+    //     authorization: resp.data.token
 
-      })
-        .then(clientInstance => {
-          let options = {
-            client: clientInstance,
-            styles: {
-              input: {
-                'font-size': '15px',
-                'font-family': 'Open Sans'
-              }
-            },
-            fields: {
-              number: {
-                selector: '#creditCardNumber',
-                placeholder: '0000-0000-0000-0000'
-              },
-              cvv: {
-                selector: '#cvv',
-                placeholder: '123'
-              },
-              expirationDate: {
-                selector: '#expireDate',
-                placeholder: '00 / 00'
-              }
-            }
-          }
-          return braintree.hostedFields.create(options)
-        })
-        .then(hostedFieldInstance => {
-          // @TODO - Use hostedFieldInstance to send data to Braintree
-          this.hostedFieldInstance = hostedFieldInstance;
-        })
-        .catch(err => {
-        });
+    //   })
+    //     .then(clientInstance => {
+    //       let options = {
+    //         client: clientInstance,
+    //         styles: {
+    //           input: {
+    //             'font-size': '15px',
+    //             'font-family': 'Open Sans'
+    //           }
+    //         },
+    //         fields: {
+    //           number: {
+    //             selector: '#creditCardNumber',
+    //             placeholder: '0000-0000-0000-0000'
+    //           },
+    //           cvv: {
+    //             selector: '#cvv',
+    //             placeholder: '123'
+    //           },
+    //           expirationDate: {
+    //             selector: '#expireDate',
+    //             placeholder: '00 / 00'
+    //           }
+    //         }
+    //       }
+    //       return braintree.hostedFields.create(options)
+    //     })
+    //     .then(hostedFieldInstance => {
+    //       // @TODO - Use hostedFieldInstance to send data to Braintree
+    //       this.hostedFieldInstance = hostedFieldInstance;
+    //     })
+    //     .catch(err => {
+    //     });
 
-    })
+    // })
 
 
   },
