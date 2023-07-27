@@ -22,8 +22,13 @@ export default {
       address: "",
       email: "",
       notes: "",
+      card_holder: "",
+      card_number: "",
+      expiration: "",
+      cvv: "",
       store,
-      baseUrl: "http://127.0.0.1:8000/"
+      baseUrl: "http://127.0.0.1:8000/",
+      success:false
     }
   },
   created() {
@@ -32,51 +37,6 @@ export default {
     console.log(this.cartItems);
   },
   mounted() {
-    // let response = await axios.get(`${ this.baseUrl }api/orders/generate`);
-    // this.tokenApi = response.data.token
-    // console.log(this.tokenApi)
-
-    // axios.get(`${this.baseUrl}api/make/payment`).then((resp) => {
-
-
-    //   braintree.client.create({
-    //     authorization: resp.data.token
-
-    //   })
-    //     .then(clientInstance => {
-    //       let options = {
-    //         client: clientInstance,
-    //         styles: {
-    //           input: {
-    //             'font-size': '15px',
-    //             'font-family': 'Open Sans'
-    //           }
-    //         },
-    //         fields: {
-    //           number: {
-    //             selector: '#creditCardNumber',
-    //             placeholder: '0000-0000-0000-0000'
-    //           },
-    //           cvv: {
-    //             selector: '#cvv',
-    //             placeholder: '123'
-    //           },
-    //           expirationDate: {
-    //             selector: '#expireDate',
-    //             placeholder: '00 / 00'
-    //           }
-    //         }
-    //       }
-    //       return braintree.hostedFields.create(options)
-    //     })
-    //     .then(hostedFieldInstance => {
-    //       // @TODO - Use hostedFieldInstance to send data to Braintree
-    //       this.hostedFieldInstance = hostedFieldInstance;
-    //     })
-    //     .catch(err => {
-    //     });
-
-    // })
 
 
   },
@@ -168,40 +128,64 @@ export default {
     clearCart() {
       localStorage.clear();
     },
-    sendPayment() {
 
-      // console.log(this.hostedFieldInstance)
-      // if (this.hostedFieldInstance) {
-      //   this.getIdQuantity();
+    sendForm(){
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const data = {
+        order: cartItems,
+        customer_name:this.nameSurname,
+        customer_address:this.address,
+        mobile_number:this.mobileNumber,
+        customer_mail:this.email,
+        customer_notes:this.notes
+      }
 
-      //   this.hostedFieldInstance.tokenize().then(payload => {
-      axios.post(`${this.baseUrl}api/make/payment`, {
+      axios.post(`${this.baseUrl}/api/payment`, data).then(res => {
+        this.success = res.data.success
 
-        // array oggetti id quantità
-        cart: this.detailsItems,
-        // token
-        // token: payload.nonce,
-        // array oggetto user
-        customer_name_surname: this.nameSurname,
-        customer_mobile_number: this.mobileNumber,
-        customer_address: this.address,
-        customer_notes: this.notes,
-        customer_email: this.email,
-
-
-
-      }).then(resp => {
-        this.cartItems.clearCart();
-        this.$router.push({ path: '/', query: { success: true } });
-        console.log(resp);
+        if(this.success){
+          this.nameSurname = '';
+          this.address = '';
+          this.mobileNumber = '';
+          this.email = '';
+          this.notes = '';
+        }
       })
-      //     })
-      //       .catch(err => {
-      //         console.error(err);
-      //       })
-      //   }
-      // },
     }
+    // sendPayment() {
+
+    //   // console.log(this.hostedFieldInstance)
+    //   // if (this.hostedFieldInstance) {
+    //   //   this.getIdQuantity();
+
+    //   //   this.hostedFieldInstance.tokenize().then(payload => {
+    //   axios.post(`${this.baseUrl}api/make/payment`, {
+
+    //     // array oggetti id quantità
+    //     cart: this.detailsItems,
+    //     // token
+    //     // token: payload.nonce,
+    //     // array oggetto user
+    //     customer_name_surname: this.nameSurname,
+    //     customer_mobile_number: this.mobileNumber,
+    //     customer_address: this.address,
+    //     customer_notes: this.notes,
+    //     customer_email: this.email,
+
+
+
+    //   }).then(resp => {
+    //     this.cartItems.clearCart();
+    //     this.$router.push({ path: '/', query: { success: true } });
+    //     console.log(resp);
+    //   })
+    //   //     })
+    //   //       .catch(err => {
+    //   //         console.error(err);
+    //   //       })
+    //   //   }
+    //   // },
+    // }
   }
 }
 </script>
@@ -283,8 +267,9 @@ export default {
                         <div class="d-flex justify-content-between align-items-center mb-4">
                           <h5 class="mb-0">Payment</h5>
                         </div>
-
-                        <form class="mt-4">
+                        
+                        <!-- form  -->
+                        <form class="mt-4" @submit.prevent="sendForm()">
                           <div class="form-group mb-3">
                             <label class="form-label">Name and Surname</label>
                             <input type="text" class="form-control" name="name_surname" v-model="nameSurname">
@@ -314,24 +299,24 @@ export default {
                           </div>
 
 
-                          <div class="mt-3">
+                          <!-- <div class="mt-3">
                             <p class="small mb-2">Card type</p>
                             <a href="#!" type="submit" class="text-white"><i
                                 class="fab fa-cc-mastercard fa-2x me-2"></i></a>
                             <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-visa fa-2x me-2"></i></a>
                             <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-amex fa-2x me-2"></i></a>
-                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
+                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a> -->
 
-                            <form class="mt-4">
+                            <!-- <form class="mt-4"> -->
                               <div class="form-outline form-white mb-4">
                                 <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                                  placeholder="Cardholder's Name" />
+                                  placeholder="Cardholder's Name" v-model="card_holder" />
                                 <label class="form-label" for="typeName">Cardholder's Name</label>
                               </div>
 
                               <div class="form-outline form-white mb-4">
                                 <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
-                                  placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                                  placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" v-model="card_number"/>
                                 <label class="form-label" for="typeText">Card Number</label>
                               </div>
 
@@ -339,36 +324,51 @@ export default {
                                 <div class="col-md-6">
                                   <div class="form-outline form-white">
                                     <input type="text" id="typeExp" class="form-control form-control-lg"
-                                      placeholder="MM/YYYY" size="7" minlength="7" maxlength="7" />
+                                      placeholder="MM/YYYY" size="7" minlength="7" maxlength="7" v-model="expiration"/>
                                     <label class="form-label" for="typeExp">Expiration</label>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-outline form-white">
                                     <input type="password" id="typeText" class="form-control form-control-lg"
-                                      placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                                      placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" v-model="cvv"/>
                                     <label class="form-label" for="typeText">Cvv</label>
                                   </div>
                                 </div>
                               </div>
 
-                            </form>
-                          </div>
+                              <hr class="my-4">
+
+                              <div class="d-flex justify-content-between mb-4">
+                                <p class="mb-2">Total(Incl. taxes)</p>
+                                <p class="mb-2">€{{ calculateTotalPrice().toFixed(2) }}</p>
+                              </div>
+
+
+                              <button type="submit" class="btn button-checkout btn-block btn-lg" >
+                                <div class="d-flex justify-content-between">
+                                  <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
+                                  <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                </div>
+                              </button>
+
+                            <!-- </form> -->
+                          <!-- </div> -->
                         </form>
 
-                        <hr class="my-4">
+                        <!-- <hr class="my-4">
 
                         <div class="d-flex justify-content-between mb-4">
                           <p class="mb-2">Total(Incl. taxes)</p>
                           <p class="mb-2">€{{ calculateTotalPrice().toFixed(2) }}</p>
-                        </div>
+                        </div> -->
 
-                        <button type="button" class="btn button-checkout btn-block btn-lg" @click="sendPayment()">
+                        <!-- <button type="submit" class="btn button-checkout btn-block btn-lg" @click="sendForm()">
                           <div class="d-flex justify-content-between">
                             <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
                             <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                           </div>
-                        </button>
+                        </button> -->
                       </div>
                     </div>
                   </div>
