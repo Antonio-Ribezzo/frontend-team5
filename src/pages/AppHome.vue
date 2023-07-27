@@ -92,8 +92,11 @@ export default {
                     <div class="card text-bg-dark transform mb-4">
                         <img class="bd-placeholder-img bd-placeholder-img-lg card-img" width="100%" height="270"
                             :src="`http://127.0.0.1:8000/storage/${elem.restaurant_image}`" :alt="index">
-                        <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                        <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center">
                             <h2 class="card-title text-center text-white">{{ elem.name }}</h2>
+                            <div v-for="(elem, index) in elem.types" :key="index">
+                                <span>{{ elem.name }}</span>
+                            </div>
                         </div>
                     </div>
                 </router-link>
