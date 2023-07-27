@@ -113,8 +113,7 @@ export default {
       const cartItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
 
       if (cartItemIndex !== -1) {
-        if (cartItems[cartItemIndex].quantity > 1) {
-          // Rimuovi una quantità se è maggiore di 1
+        if (cartItems[cartItemIndex].quantity >= 1) {
           cartItems[cartItemIndex].quantity++;
           this.store.CartCounter++;
         }
@@ -239,7 +238,8 @@ export default {
                         </div>
 
 
-                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex flex-column justify-content-center align-items-center">
+                        <div
+                          class="col-md-3 col-lg-3 col-xl-2 d-flex flex-column justify-content-center align-items-center">
 
                           <h6>Quantity: </h6>
 
@@ -247,11 +247,11 @@ export default {
                             <button class="btn btn-link button-minus px-2" @click="deleteFromCart(item)">
                               <i class="fas fa-minus"></i>
                             </button>
-  
+
                             <div>
                               <span class="text-center">{{ item.quantity }}</span>
                             </div>
-  
+
                             <button class="btn btn-link button-plus px-2" @click="addFromCart(item)">
                               <i class="fas fa-plus"></i>
                             </button>
