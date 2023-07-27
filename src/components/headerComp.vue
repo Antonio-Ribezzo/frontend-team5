@@ -27,7 +27,9 @@ import { store } from '../store';
     <div>
         <nav class="navbar navbar-expand-lg sb-top-bar-frame">
             <div class="container d-flex justify-content-between sb-top-bar">
-                <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="" class="navbar-brand me-auto sb-logo-frame" href="#" width="200">
+                <router-link :to="{ name: 'AppHome'}">
+                    <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="" class="navbar-brand me-auto sb-logo-frame" href="#" width="200">
+                </router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -39,10 +41,10 @@ import { store } from '../store';
                                 <router-link :to="{ name: 'AppHome'}" class="nav-link sb-menu-item sb-mb-30 text-decoration-none">Home</router-link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="http://127.0.0.1:8000/register">Register your Restaurant</a>
+                                <a class="nav-link" href="http://127.0.0.1:8000/register" target="_blank">Register your Restaurant</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="http://127.0.0.1:8000/login">Login</a>
+                                <a class="nav-link" href="http://127.0.0.1:8000/login" target="_blank">Login</a>
                             </li>
                         </ul>
                     </div>
