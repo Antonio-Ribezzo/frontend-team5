@@ -237,25 +237,30 @@ export default {
                         <div class="col-md-3 col-lg-3 col-xl-3">
                           <h6 class="text-black mb-0">{{ item.name }}</h6>
                         </div>
-                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
 
-                          <button class="btn btn-link button-minus px-2" @click="deleteFromCart(item)">
-                            <i class="fas fa-minus"></i>
-                          </button>
 
-                          <div class="pb-2">
-                            <h6>Quantity: </h6>
-                            {{ item.quantity }}
+                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex flex-column justify-content-center align-items-center">
+
+                          <h6>Quantity: </h6>
+
+                          <div class="d-flex justify-content-center align-items-center">
+                            <button class="btn btn-link button-minus px-2" @click="deleteFromCart(item)">
+                              <i class="fas fa-minus"></i>
+                            </button>
+  
+                            <div>
+                              <span class="text-center">{{ item.quantity }}</span>
+                            </div>
+  
+                            <button class="btn btn-link button-plus px-2" @click="addFromCart(item)">
+                              <i class="fas fa-plus"></i>
+                            </button>
                           </div>
-
-                          <button class="btn btn-link button-plus px-2" @click="addFromCart(item)">
-                            <i class="fas fa-plus"></i>
-                          </button>
 
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                          <h6 class="mb-0">€{{ item.quantity === 1 ? item.price : item.quantity *
-                            item.price }}</h6>
+                          <h6 class="mb-0">€{{ item.quantity === 1 ? item.price : (item.quantity *
+                            item.price).toFixed(2) }}</h6>
                         </div>
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end delete">
                           <i @click="deleteAll(item)" class="fa-solid fa-trash"></i>
