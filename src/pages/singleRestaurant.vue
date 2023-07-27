@@ -67,17 +67,17 @@ export default {
                     cartItem.quantity++;
                     this.store.CartCounter++;
                 } else {
-                    cartItems.push({ 
-                        id: item.id, 
-                        name: item.name, 
-                        quantity: 1, 
-                        price: item.price, 
-                        cover_image: item.cover_image, 
-                        restaurant_id:item.restaurant_id 
+                    cartItems.push({
+                        id: item.id,
+                        name: item.name,
+                        quantity: 1,
+                        price: item.price,
+                        cover_image: item.cover_image,
+                        restaurant_id: item.restaurant_id
                     });
                     this.store.CartCounter++;
 
-                    
+
                 }
 
                 // Salva i dati aggiornati nel localStorage
@@ -110,15 +110,18 @@ export default {
             <div class="row mb-5">
 
                 <div v-for="(elem, index) in restaurant_items" :key="index" class="col-lg-3 mb-3 flip">
-                    <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }" class="sb-menu-item sb-mb-30 text-decoration-none d-flex flex-column"> 
+                    <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }"
+                        class="sb-menu-item sb-mb-30 text-decoration-none d-flex flex-column">
                         <div class="card">
-                            <img class="card-img" width="100%" height="270" :src="`http://127.0.0.1:8000/storage/${elem.cover_image}`" :alt="index">
-                            <div class="card-img-overlay text-white text-center d-flex flex-column justify-content-center align-items-center">
+                            <img class="card-img img-rest" width="100%" height="270"
+                                :src="`http://127.0.0.1:8000/storage/${elem.cover_image}`" :alt="index">
+                            <div
+                                class="card-img-overlay text-white text-center d-flex flex-column justify-content-center align-items-center">
                                 <h2>{{ elem.name }}</h2>
                                 <h6 class="rounded-pill bg-dark p-1">&euro;{{ elem.price }}</h6>
                             </div>
                         </div>
-                            <div class="btn btn-warning d-flex flex-column" @click="addToCart(elem)">Add to cart
+                        <div class="btn btn-warning d-flex flex-column" @click="addToCart(elem)">Add to cart
                         </div>
                     </router-link>
                 </div>
@@ -129,27 +132,41 @@ export default {
 
 
 <style lang="scss" scoped>
+router-link {
+    &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
 
-router-link{
-    &:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-    img{
-        filter: brightness(70%);
-    }
-}
-.card{
-    img{
+    img {
         filter: brightness(70%);
     }
 }
 
-.btn-warning{
-    &:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    scale: 102%;
+.card {
+    overflow: hidden;
+
+    img {
+        filter: brightness(70%);
+        object-fit: cover;
+        transition: transform 1.5s;
+    }
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
     }
 }
+
+
+.btn-warning {
+    &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        scale: 102%;
+    }
+}
+
+
 // .sb-menu-item .sb-card-tp {
 //     margin-bottom: 15px;
 //     padding-left: 15px;
