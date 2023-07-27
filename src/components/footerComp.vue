@@ -4,18 +4,18 @@
         data(){
             return{
                 arrayFooterItems:[
-                    'Servizio Clienti',
-                    'Rapporti con gli investitori',
-                    'Note legali',
-                    'Centro assistenza',
-                    'Opportunità di lavoro',
-                    'Preferenze per i cookie',
-                    'Carte regalo',
-                    'Condizioni di utilizzo',
-                    "Informazioni sull'azienda",
+                    'Customer Service',
+                    'Investor Relations',
+                    'Legal Notes',
+                    'Help Center',
+                    'Job Opportunities',
+                    'Cookie Preferences',
+                    'Gift Cards',
+                    'Terms of Use',
+                    'About Us',
                     'Media Center',
                     'Privacy',
-                    'Contattaci'
+                    'Contact Us'
                 ]
             }
         }
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <!-- button footer -->
-            <button type="button" class="btn btn-outline-secondary">Codice di servizio</button>
+            <button type="button" class="btn btn-outline-secondary">Service Code</button>
             <!-- copyright -->
             <span class="d-block mt-3">&copy; 1997-2023 Deliveboo, Food Delivery</span>
         </div>
