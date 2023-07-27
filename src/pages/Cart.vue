@@ -17,9 +17,9 @@ export default {
       restaurant: [],
       restaurant_items: [],
       tokenApi: "",
-      detailsItems:[],
+      detailsItems: [],
       nameSurname: "",
-      mobileNumber:"",
+      mobileNumber: "",
       address: "",
       email: "",
       notes: "",
@@ -29,7 +29,7 @@ export default {
   },
   created() {
     // Recupera i dati del carrello dal LocalStorage quando il componente è creato
-    this.cartItems = JSON.parse(localStorage.getItem('cartItems'))||[];
+    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     console.log(this.cartItems);
   },
   mounted() {
@@ -37,7 +37,7 @@ export default {
     // this.tokenApi = response.data.token
     // console.log(this.tokenApi)
 
-     axios.get(`${this.baseUrl}api/make/payment`).then((resp) => {
+    axios.get(`${this.baseUrl}api/make/payment`).then((resp) => {
 
 
       braintree.client.create({
@@ -77,13 +77,13 @@ export default {
         .catch(err => {
         });
 
-     })
+    })
 
 
   },
   methods: {
     deleteFromCart(item) {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems'))||[];
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       const cartItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
 
       if (cartItemIndex !== -1) {
@@ -96,6 +96,48 @@ export default {
           cartItems.splice(cartItemIndex, 1);
           this.store.CartCounter--;
         }
+
+        // Salva i dati aggiornati nel localStorage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        // Aggiorna la visualizzazione del carrello (se necessario)
+        // Puoi aggiungere qui la logica per aggiornare l'interfaccia utente del carrello
+
+        this.cartItems = cartItems;
+        // Emetti l'evento personalizzato 'cart-item-deleted' con l'oggetto item rimosso come payload
+        this.$emit('cart-item-deleted', item);
+      }
+    },
+    addFromCart(item) {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
+
+      if (cartItemIndex !== -1) {
+        if (cartItems[cartItemIndex].quantity > 1) {
+          // Rimuovi una quantità se è maggiore di 1
+          cartItems[cartItemIndex].quantity++;
+          this.store.CartCounter++;
+        }
+
+        // Salva i dati aggiornati nel localStorage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        // Aggiorna la visualizzazione del carrello (se necessario)
+        // Puoi aggiungere qui la logica per aggiornare l'interfaccia utente del carrello
+
+        this.cartItems = cartItems;
+        // Emetti l'evento personalizzato 'cart-item-deleted' con l'oggetto item rimosso come payload
+        this.$emit('cart-item-deleted', item);
+      }
+    },
+    deleteAll(item) {
+      let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
+
+      if (cartItemIndex !== -1) {
+
+        cartItems.splice(cartItemIndex, 1);
+        this.store.CartCounter -= item.quantity;
 
         // Salva i dati aggiornati nel localStorage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -135,35 +177,37 @@ export default {
       //   this.getIdQuantity();
 
       //   this.hostedFieldInstance.tokenize().then(payload => {
-          axios.post(`${this.baseUrl}api/make/payment`, {
+      axios.post(`${this.baseUrl}api/make/payment`, {
 
-            // array oggetti id quantità
-            cart: this.detailsItems,
-            // token
-            // token: payload.nonce,
-            // array oggetto user
-            customer_name_surname: this.nameSurname,
-            customer_mobile_number: this.mobileNumber,
-            customer_address: this.address,
-            customer_notes: this.notes,
-            customer_email: this.email,
+        // array oggetti id quantità
+        cart: this.detailsItems,
+        // token
+        // token: payload.nonce,
+        // array oggetto user
+        customer_name_surname: this.nameSurname,
+        customer_mobile_number: this.mobileNumber,
+        customer_address: this.address,
+        customer_notes: this.notes,
+        customer_email: this.email,
 
 
 
-          }).then(resp => {
-            this.cartItems.clearCart();
-            this.$router.push({ path: '/', query: { success: true } });
-            console.log(resp);
-          })
-    //     })
-    //       .catch(err => {
-    //         console.error(err);
-    //       })
-    //   }
-    // },
+      }).then(resp => {
+        this.cartItems.clearCart();
+        this.$router.push({ path: '/', query: { success: true } });
+        console.log(resp);
+      })
+      //     })
+      //       .catch(err => {
+      //         console.error(err);
+      //       })
+      //   }
+      // },
+    }
   }
-}}
+}
 </script>
+
 
 
 <template>
@@ -195,18 +239,26 @@ export default {
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
 
-                          <div>
-                            Quantity: {{ item.quantity }}
+                          <button class="btn btn-link button-minus px-2" @click="deleteFromCart(item)">
+                            <i class="fas fa-minus"></i>
+                          </button>
+
+                          <div class="pb-2">
+                            <h6>Quantity: </h6>
+                            {{ item.quantity }}
                           </div>
 
+                          <button class="btn btn-link button-plus px-2" @click="addFromCart(item)">
+                            <i class="fas fa-plus"></i>
+                          </button>
 
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                           <h6 class="mb-0">€{{ item.quantity === 1 ? item.price : item.quantity *
                             item.price }}</h6>
                         </div>
-                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                          <i @click="deleteFromCart(item)" class="fa-solid fa-trash"></i>
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end delete">
+                          <i @click="deleteAll(item)" class="fa-solid fa-trash"></i>
                         </div>
                       </div>
                       <hr class="border border-2 border-dark">
@@ -214,7 +266,8 @@ export default {
 
 
                     <div class="pt-5">
-                      <h6 class="mb-0"><router-link :to="{ name: 'AppHome' }" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back
+                      <h6 class="mb-0"><router-link :to="{ name: 'AppHome' }" class="text-body"><i
+                            class="fas fa-long-arrow-alt-left me-2"></i>Back
                           to shop</router-link></h6>
                     </div>
                   </div>
@@ -224,7 +277,7 @@ export default {
                     <div class="card bc-bacground-summary text-white rounded-3">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                          <h5 class="mb-0">Card details</h5>
+                          <h5 class="mb-0">Payment</h5>
                         </div>
 
                         <form class="mt-4">
@@ -232,30 +285,71 @@ export default {
                             <label class="form-label">Name and Surname</label>
                             <input type="text" class="form-control" name="name_surname" v-model="nameSurname">
                           </div>
-                          
+
                           <div class="form-group mb-3">
                             <label class="form-label">Address</label>
-                            <input type="text" class="form-control" name="customer_address"  v-model="address">
+                            <input type="text" class="form-control" name="customer_address" v-model="address">
                           </div>
 
                           <div class="form-group mb-3">
                             <label class="form-label">Mobile number</label>
-                            <input type="text" id="Vat" required class="form-control" name="mobile_number" v-model="mobileNumber">
+                            <input type="text" id="Vat" required class="form-control" name="mobile_number"
+                              v-model="mobileNumber">
                           </div>
 
                           <div class="form-group mb-3">
                             <label class="form-label">Email</label>
-                            <input id="email" type="email" class="form-control" name="customer_mail"
-                              autocomplete=" email" autofocus v-model="email">
+                            <input id="email" type="email" class="form-control" name="customer_mail" autocomplete=" email"
+                              autofocus v-model="email">
                           </div>
 
                           <div class="form-group">
                             <label class="form-label">Note</label>
-                            <textarea name="" id="" required class="form-control" cols="30" rows="10" v-model="notes"></textarea>
+                            <textarea name="" id="" required class="form-control" cols="30" rows="10"
+                              v-model="notes"></textarea>
                           </div>
 
-                          <!-- <paymentComp :authorization="tokenApi" /> -->
-                         
+
+                          <div class="mt-3">
+                            <p class="small mb-2">Card type</p>
+                            <a href="#!" type="submit" class="text-white"><i
+                                class="fab fa-cc-mastercard fa-2x me-2"></i></a>
+                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-visa fa-2x me-2"></i></a>
+                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-amex fa-2x me-2"></i></a>
+                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
+
+                            <form class="mt-4">
+                              <div class="form-outline form-white mb-4">
+                                <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
+                                  placeholder="Cardholder's Name" />
+                                <label class="form-label" for="typeName">Cardholder's Name</label>
+                              </div>
+
+                              <div class="form-outline form-white mb-4">
+                                <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
+                                  placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                                <label class="form-label" for="typeText">Card Number</label>
+                              </div>
+
+                              <div class="row mb-4">
+                                <div class="col-md-6">
+                                  <div class="form-outline form-white">
+                                    <input type="text" id="typeExp" class="form-control form-control-lg"
+                                      placeholder="MM/YYYY" size="7" minlength="7" maxlength="7" />
+                                    <label class="form-label" for="typeExp">Expiration</label>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-outline form-white">
+                                    <input type="password" id="typeText" class="form-control form-control-lg"
+                                      placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                                    <label class="form-label" for="typeText">Cvv</label>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </form>
+                          </div>
                         </form>
 
                         <hr class="my-4">
@@ -302,7 +396,34 @@ export default {
   transform: scale(1.1);
 }
 
-.fa-trash{
+.fa-trash {
   cursor: pointer;
+}
+
+.delete {
+  transition: transform 0.5s;
+
+}
+
+.delete:hover {
+  color: rgb(183, 14, 14);
+  transform: scale(1.1);
+}
+
+.button-plus {
+  transition: transform 0.5s;
+}
+
+.button-plus:hover {
+  transform: scale(1.2);
+}
+
+.button-minus {
+  transition: transform 0.5s;
+
+}
+
+.button-minus:hover {
+  transform: scale(1.2);
 }
 </style>
