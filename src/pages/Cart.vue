@@ -80,9 +80,6 @@ export default {
         // Salva i dati aggiornati nel localStorage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-        // Aggiorna la visualizzazione del carrello (se necessario)
-        // Puoi aggiungere qui la logica per aggiornare l'interfaccia utente del carrello
-
         this.cartItems = cartItems;
         // Emetti l'evento personalizzato 'cart-item-deleted' con l'oggetto item rimosso come payload
         this.$emit('cart-item-deleted', item);
@@ -131,8 +128,18 @@ export default {
 
     sendForm(){
       const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+      const cartItemsArray = Object.values(cartItems);
+
+      const RestaurantIds = cartItemsArray.map(item => item.restaurant_id);
+
+      const RestaurantId = RestaurantIds[0];
+      
+      console.log(RestaurantId,'restaurantid')
+
       const data = {
         order: cartItems,
+        restaurant_id: RestaurantId,
         customer_name:this.nameSurname,
         customer_address:this.address,
         mobile_number:this.mobileNumber,
@@ -140,7 +147,7 @@ export default {
         customer_notes:this.notes
       }
 
-      axios.post(`${this.baseUrl}/api/payment`, data).then(res => {
+      axios.post(`${this.baseUrl}api/payment`, data).then(res => {
         this.success = res.data.success
 
         if(this.success){
@@ -149,6 +156,9 @@ export default {
           this.mobileNumber = '';
           this.email = '';
           this.notes = '';
+          this.card_holder = '';
+          this.card_number = '';
+          this.expiration = '';
         }
       })
     }
