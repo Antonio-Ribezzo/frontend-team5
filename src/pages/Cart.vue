@@ -302,7 +302,7 @@ export default {
                               autofocus v-model="email">
                           </div>
 
-                          <div class="form-group">
+                          <div class="form-group mb-5">
                             <label class="form-label">Note</label>
                             <textarea name="" id="" required class="form-control" cols="30" rows="10"
                               v-model="notes"></textarea>
