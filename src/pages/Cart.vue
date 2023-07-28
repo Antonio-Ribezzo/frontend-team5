@@ -304,7 +304,7 @@ export default {
 
                           <div class="form-group mb-5">
                             <label class="form-label">Note</label>
-                            <textarea name="" id="" required class="form-control" cols="30" rows="10"
+                            <textarea required class="form-control" cols="30" rows="10"
                               v-model="notes"></textarea>
                           </div>
 
@@ -325,9 +325,9 @@ export default {
                               </div>
 
                               <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
+                                <input type="text" id="typeText1" class="form-control form-control-lg" siez="17"
                                   placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" v-model="card_number"/>
-                                <label class="form-label" for="typeText">Card Number</label>
+                                <label class="form-label" for="typeText1">Card Number</label>
                               </div>
 
                               <div class="row mb-4">
@@ -340,9 +340,9 @@ export default {
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-outline form-white">
-                                    <input type="password" id="typeText" class="form-control form-control-lg"
+                                    <input type="password" id="typeText2" class="form-control form-control-lg"
                                       placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" v-model="cvv"/>
-                                    <label class="form-label" for="typeText">Cvv</label>
+                                    <label class="form-label" for="typeText2">Cvv</label>
                                   </div>
                                 </div>
                               </div>
