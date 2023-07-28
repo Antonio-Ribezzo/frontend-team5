@@ -26,6 +26,9 @@ export default {
       card_number: "",
       expiration: "",
       cvv: "",
+      paymentSuccess: false,
+      loadingShow:false,
+      paymentFinished:false,
       store,
       baseUrl: "http://127.0.0.1:8000/",
       success:false
@@ -112,16 +115,6 @@ export default {
       }
       return total;
     },
-    getIdQuantity() {
-      this.cartItems.forEach(items => {
-        const dishes = {
-          id: items.id,
-          quantity: items.quantity,
-        }
-        this.detailsItems.push(dishes);
-
-      })
-    },
     clearCart() {
       localStorage.clear();
     },
@@ -159,43 +152,34 @@ export default {
           this.card_holder = '';
           this.card_number = '';
           this.expiration = '';
+
+          
+          setTimeout(() => {
+            this.paymentSuccess = true;
+            this.loadingShow = true;
+
+            setTimeout(() => {
+              this.loadingShow = false;
+              this.paymentFinished = true;
+
+              setTimeout(() => {
+                // Svuota il localStorage dopo il completamento del pagamento
+              localStorage.removeItem('cartItems');
+              
+              //Imposto il counter del carrello a 0
+              this.store.CartCounter = 0;
+                          
+              // Utilizza il router per navigare a 'AppHome'
+              this.$router.push({ name: 'AppHome' });
+            }, 1500);       
+ 
+          }, 2000); // Aggiunto un ritardo di 2000 millisecondi (2 secondi) prima del secondo setTimeout
+          
+        }, 2000);
         }
+        
       })
     }
-    // sendPayment() {
-
-    //   // console.log(this.hostedFieldInstance)
-    //   // if (this.hostedFieldInstance) {
-    //   //   this.getIdQuantity();
-
-    //   //   this.hostedFieldInstance.tokenize().then(payload => {
-    //   axios.post(`${this.baseUrl}api/make/payment`, {
-
-    //     // array oggetti id quantità
-    //     cart: this.detailsItems,
-    //     // token
-    //     // token: payload.nonce,
-    //     // array oggetto user
-    //     customer_name_surname: this.nameSurname,
-    //     customer_mobile_number: this.mobileNumber,
-    //     customer_address: this.address,
-    //     customer_notes: this.notes,
-    //     customer_email: this.email,
-
-
-
-    //   }).then(resp => {
-    //     this.cartItems.clearCart();
-    //     this.$router.push({ path: '/', query: { success: true } });
-    //     console.log(resp);
-    //   })
-    //   //     })
-    //   //       .catch(err => {
-    //   //         console.error(err);
-    //   //       })
-    //   //   }
-    //   // },
-    // }
   }
 }
 </script>
@@ -203,7 +187,7 @@ export default {
 
 
 <template>
-  <section class="h-100 h-custom" style="background-color: #f5c332;">
+  <section class="h-100 h-custom modal-open" style="background-color: #f5c332;">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12">
@@ -343,12 +327,22 @@ export default {
                               </div>
 
 
-                              <button type="submit" class="btn button-checkout btn-block btn-lg" >
-                                <div class="d-flex justify-content-between">
+                              <button id="myBtn" type="submit" class="btn button-checkout btn-block btn-lg">
+                                
+                                <div v-if="loadingShow == true" class="spinner-border text-secondary d-flex justify-content-center" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+
+                                <div v-if="paymentSuccess == false" class="d-flex justify-content-between">
                                   <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
                                   <span class="ms-3">Pay<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                                 </div>
-                              </button>
+
+                                <div v-if="paymentFinished == true" class="d-flex justify-content-between">
+                                    <span>Pagamento effettuato <i class="fa-solid fa-circle-check" style="color: #00ff55;"></i></span>
+                                </div>
+
+                              </button>                              
                         </form>
                       </div>
                     </div>
@@ -360,6 +354,7 @@ export default {
         </div>
       </div>
     </div>
+    
   </section>
 </template>
 
@@ -411,4 +406,6 @@ export default {
 .button-minus:hover {
   transform: scale(1.2);
 }
+
+
 </style>
