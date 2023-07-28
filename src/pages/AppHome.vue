@@ -70,8 +70,8 @@ export default {
     </section>
 
     <!-- checkbox Types  -->
-    <div class="container my-5">
-        <h2 class="text-center">Select Categories</h2>
+    <div class="container my-5 py-4">
+        <h2 class="text-center">RESTAURANTS</h2>
         <div class="mt-2 p-4 rounded">
             <div class="rounded d-flex justify-content-center align-items-center flex-wrap">
                 <label v-for="(elem, index) in types" :key="index" :for="elem.name"
@@ -84,7 +84,7 @@ export default {
         </div>
 
         <!-- lista ristoranti -->
-        <div class="row">
+        <div class="row my-5">
 
             <div v-for="(elem, index) in restaurants" :key="index" class="col-lg-3">
                 <router-link :to="{ name: 'restaurant', params: { slug: elem.slug, id: elem.id } }"

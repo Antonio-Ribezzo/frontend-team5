@@ -100,7 +100,7 @@ export default {
 
 <template>
     <div>
-        <div class="container">
+        <div class="container py-5">
             <h1 v-if="restaurant" class="text-center mt-5"> {{ restaurant.name }} </h1>
             <p v-if="restaurant" class="text-center mt-2"> <b>Address: </b> {{ restaurant.address }} </p>
 

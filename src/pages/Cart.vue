@@ -265,24 +265,24 @@ export default {
                         <form class="mt-4" @submit.prevent="sendForm()">
                           <div class="form-group mb-3">
                             <label class="form-label">Name and Surname</label>
-                            <input type="text" class="form-control" name="name_surname" v-model="nameSurname">
+                            <input type="text" class="form-control" name="name_surname" v-model="nameSurname" required>
                           </div>
 
                           <div class="form-group mb-3">
                             <label class="form-label">Address</label>
-                            <input type="text" class="form-control" name="customer_address" v-model="address">
+                            <input type="text" class="form-control" name="customer_address" v-model="address" required>
                           </div>
 
                           <div class="form-group mb-3">
                             <label class="form-label">Mobile number</label>
-                            <input type="text" id="Vat" required class="form-control" name="mobile_number"
-                              v-model="mobileNumber">
+                            <input type="text" id="Vat" class="form-control" name="mobile_number"
+                              v-model="mobileNumber" required>
                           </div>
 
                           <div class="form-group mb-3">
                             <label class="form-label">Email</label>
                             <input id="email" type="email" class="form-control" name="customer_mail" autocomplete=" email"
-                              autofocus v-model="email">
+                              autofocus v-model="email" required>
                           </div>
 
                           <div class="form-group mb-5">
@@ -292,13 +292,13 @@ export default {
                           </div>
                               <div class="form-outline form-white mb-4">
                                 <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                                  placeholder="Cardholder's Name" v-model="card_holder" />
+                                  placeholder="Cardholder's Name" v-model="card_holder" required/>
                                 <label class="form-label" for="typeName">Cardholder's Name</label>
                               </div>
 
                               <div class="form-outline form-white mb-4">
                                 <input type="text" id="typeText1" class="form-control form-control-lg" siez="17"
-                                  placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" v-model="card_number"/>
+                                  placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" v-model="card_number" required/>
                                 <label class="form-label" for="typeText1">Card Number</label>
                               </div>
 
@@ -306,14 +306,14 @@ export default {
                                 <div class="col-md-6">
                                   <div class="form-outline form-white">
                                     <input type="text" id="typeExp" class="form-control form-control-lg"
-                                      placeholder="MM/YYYY" size="7" minlength="7" maxlength="7" v-model="expiration"/>
+                                      placeholder="MM/YYYY" size="7" minlength="7" maxlength="7" v-model="expiration" required/>
                                     <label class="form-label" for="typeExp">Expiration</label>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-outline form-white">
                                     <input type="password" id="typeText2" class="form-control form-control-lg"
-                                      placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" v-model="cvv"/>
+                                      placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" v-model="cvv" required/>
                                     <label class="form-label" for="typeText2">Cvv</label>
                                   </div>
                                 </div>
