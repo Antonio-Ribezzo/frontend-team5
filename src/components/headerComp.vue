@@ -2,13 +2,17 @@
 
 import { RouterLink } from 'vue-router';
 import { store } from '../store';
+import axios from 'axios';
 
-    export default {
+export default {
     name: "headerComp",
     components: { RouterLink },
     data() {
         return {
             store,
+            cartItems: [],
+            restaurant: [],
+            restaurant_items: [],
         }
     },
     computed: {
@@ -18,7 +22,13 @@ import { store } from '../store';
             this.store.CartCounter = totalItems
             return this.store.CartCounter;
         }
-    }
+    },
+    created() {
+        // Recupera i dati del carrello dal LocalStorage quando il componente è creato
+        this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        console.log(this.cartItems);
+    },
+
 }
 </script>
 
@@ -27,36 +37,49 @@ import { store } from '../store';
         <nav class="navbar navbar-expand-lg sb-top-bar-frame py-4">
             <div class="container d-flex justify-content-between sb-top-bar">
 
-                <router-link :to="{ name: 'AppHome'}">
-                    <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="logo-img" class="navbar-brand me-auto sb-logo-frame" href="#" width="200">
+                <router-link :to="{ name: 'AppHome' }">
+                    <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="logo-img"
+                        class="navbar-brand me-auto sb-logo-frame" href="#" width="200">
                 </router-link>
 
-                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="true" aria-label="Toggle navigation">
+                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="true"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse py-3" id="navbarTogglerDemo01">
-                        <ul class="navbar-nav ms-auto sb-navigation">
-                            <li class="nav-item">
-                                <router-link :to="{ name: 'AppHome'}" class="nav-link sb-menu-item sb-mb-30 text-decoration-none">Home</router-link>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://127.0.0.1:8000/register" target="_blank">Register your Restaurant</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://127.0.0.1:8000/login" target="_blank">Login</a>
-                            </li>
-                        </ul>
+                    <ul class="navbar-nav ms-auto sb-navigation">
+                        <li class="nav-item">
+                            <router-link :to="{ name: 'AppHome' }"
+                                class="nav-link sb-menu-item sb-mb-30 text-decoration-none">Home</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://127.0.0.1:8000/register" target="_blank">Register your
+                                Restaurant</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://127.0.0.1:8000/login" target="_blank">Login</a>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="ms-3">
-                    <router-link :to="{ name: 'cart'}" class="nav-link">
+                    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight">
+                        <i class="fa-solid fa-cart-shopping position-relative">
+                            <span class="sb-cart-number">
+                                {{ cartItemCount }}
+                            </span>
+                        </i>
+                    </button>
+                    <!-- <router-link :to="{ name: 'cart'}" class="nav-link">
                         <i class="fa-solid fa-cart-shopping position-relative"> 
                             <span class="sb-cart-number">
                               {{ cartItemCount }}
                             </span>
                         </i>
-                    </router-link>
+                    </router-link> -->
                 </div>
 
 
@@ -66,19 +89,59 @@ import { store } from '../store';
 
             </div>
         </nav>
-    </div>
+        <div class="offcanvas up offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Cart Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body bg-board d-flex flex-column justify-content-between">
+                <ul>
+                    <li class="text-decoration-none mr-4 my-3" v-for="item in cartItems" :key="item.id">
+                        <div class="row d-flex">
+                            <div class="col-3">
+                                <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image"
+                                    class="w-100">
+                            </div>
+                            <div class="col-3 bg-warning align-items-center">
+                                <h6 class="text-black mb-0">{{ item.name }}</h6>
+                            </div>
+                            <div class="col-3 bg-warning align-items-center">
+                                <span class="text-center text-black">Quantity: {{ item.quantity }} pz.</span>
+                            </div>
+                            <div class="col-3 bg-warning align-items-center">
+                                <h6 class="mb-0 text-black">€{{ item.quantity === 1 ? item.price : (item.quantity *
+                                    item.price).toFixed(2) }}</h6>
+                            </div>
 
+                        </div>
+
+                    </li>
+                </ul>
+
+                <div>
+                    <button class="btn btn-warning">
+                        <router-link :to="{ name: 'cart' }" class="nav-link">
+                            Checkout & Payment
+                        </router-link>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style lang="scss" scoped>
-
 nav {
     width: 100%;
     margin-right: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
+}
+
+li {
+    list-style-type: none;
 }
 
 .sb-top-bar-frame {
@@ -133,7 +196,7 @@ nav {
     transition: 0.1s ease-in-out;
 }
 
-i{
+i {
     background-color: #F2F3F5;
     transform: scale(0.95);
     border-radius: 50%;
@@ -144,10 +207,10 @@ i{
     margin: 0;
     width: 55px;
     height: 55px;
-    
+
 }
 
-.translate{
+.translate {
     transform: translate(-80%, -0%) !important;
 }
 
@@ -179,7 +242,11 @@ nav .sb-navigation li a {
     transition: 0.3s ease-in-out;
 }
 
+.up {
+    z-index: 9999;
+}
 
-
-
+.bg-board {
+    background-image: url('https://th.bing.com/th/id/OIP.zpn9HcSt2rbo1PWTfinBwgAAAA?pid=ImgDet&rs=1');
+}
 </style>
