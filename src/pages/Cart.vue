@@ -221,18 +221,17 @@ export default {
 
                       <div class="row mb-4 d-flex justify-content-between align-items-center">
                         <div class="col-md-2 col-lg-2 col-xl-2">
-                          <div class="transform rounded-3">
+                          <div class="transform rounded-3 mb-3 mb-md-0">
                             <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image"
                               class="w-100 rounded-3 ">
                           </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3">
-                          <h6 class="text-black mb-0">{{ item.name }}</h6>
+                          <h6 class="text-black text-center mt-2 mt-md-0 mb-3 mb-md-0">{{ item.name }}</h6>
                         </div>
 
 
-                        <div
-                          class="col-md-3 col-lg-3 col-xl-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex flex-column justify-content-center align-items-center">
 
                           <h6>Quantity: </h6>
 
@@ -251,11 +250,11 @@ export default {
                           </div>
 
                         </div>
-                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <div class="text-center mt-2 mt-md-0 col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                           <h6 class="mb-0">€{{ item.quantity === 1 ? item.price : (item.quantity *
                             item.price).toFixed(2) }}</h6>
                         </div>
-                        <div class="col-md-1 col-lg-1 col-xl-1 text-end delete">
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-center delete mt-2 mt-md-0">
                           <i @click="deleteAll(item)" class="fa-solid fa-trash"></i>
                         </div>
                       </div>
@@ -307,17 +306,6 @@ export default {
                             <textarea required class="form-control" cols="30" rows="10"
                               v-model="notes"></textarea>
                           </div>
-
-
-                          <!-- <div class="mt-3">
-                            <p class="small mb-2">Card type</p>
-                            <a href="#!" type="submit" class="text-white"><i
-                                class="fab fa-cc-mastercard fa-2x me-2"></i></a>
-                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-visa fa-2x me-2"></i></a>
-                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-amex fa-2x me-2"></i></a>
-                            <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a> -->
-
-                            <!-- <form class="mt-4"> -->
                               <div class="form-outline form-white mb-4">
                                 <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
                                   placeholder="Cardholder's Name" v-model="card_holder" />
@@ -361,24 +349,7 @@ export default {
                                   <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                                 </div>
                               </button>
-
-                            <!-- </form> -->
-                          <!-- </div> -->
                         </form>
-
-                        <!-- <hr class="my-4">
-
-                        <div class="d-flex justify-content-between mb-4">
-                          <p class="mb-2">Total(Incl. taxes)</p>
-                          <p class="mb-2">€{{ calculateTotalPrice().toFixed(2) }}</p>
-                        </div> -->
-
-                        <!-- <button type="submit" class="btn button-checkout btn-block btn-lg" @click="sendForm()">
-                          <div class="d-flex justify-content-between">
-                            <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
-                            <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
-                          </div>
-                        </button> -->
                       </div>
                     </div>
                   </div>

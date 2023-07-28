@@ -23,19 +23,19 @@ import { store } from '../store';
 </script>
 
 <template>
-
     <div>
-        <nav class="navbar navbar-expand-lg sb-top-bar-frame">
+        <nav class="navbar navbar-expand-lg sb-top-bar-frame py-4">
             <div class="container d-flex justify-content-between sb-top-bar">
+
                 <router-link :to="{ name: 'AppHome'}">
-                    <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="" class="navbar-brand me-auto sb-logo-frame" href="#" width="200">
+                    <img src="/img/deliveboo-low-resolution-logo-color-on-transparent-background.png" alt="logo-img" class="navbar-brand me-auto sb-logo-frame" href="#" width="200">
                 </router-link>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="true" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="d-flex flex-column flex-lg-row sb-right-side">
-                    <div class="collapse navbar-collapse mx-auto sb-menu-transition" id="sb-dynamic-menu">
+                <div class="collapse navbar-collapse py-3" id="navbarTogglerDemo01">
                         <ul class="navbar-nav ms-auto sb-navigation">
                             <li class="nav-item">
                                 <router-link :to="{ name: 'AppHome'}" class="nav-link sb-menu-item sb-mb-30 text-decoration-none">Home</router-link>
@@ -47,21 +47,27 @@ import { store } from '../store';
                                 <a class="nav-link" href="http://127.0.0.1:8000/login" target="_blank">Login</a>
                             </li>
                         </ul>
-                    </div>
-
-                    <div class="ms-lg-3 align-self-center ms-3">
-                        <router-link :to="{ name: 'cart'}" class="nav-link">
-                            <i class="fa-solid fa-cart-shopping position-relative"> 
-                                <span class="sb-cart-number">
-                                  {{ cartItemCount }}
-                                </span>
-                            </i>
-                        </router-link>
-                    </div>
                 </div>
+
+                <div class="ms-3">
+                    <router-link :to="{ name: 'cart'}" class="nav-link">
+                        <i class="fa-solid fa-cart-shopping position-relative"> 
+                            <span class="sb-cart-number">
+                              {{ cartItemCount }}
+                            </span>
+                        </i>
+                    </router-link>
+                </div>
+
+
+                <!-- <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="true" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button> -->
+
             </div>
         </nav>
     </div>
+
 </template>
 
 <style lang="scss" scoped>
@@ -101,7 +107,7 @@ nav {
 .sb-top-bar-frame .sb-top-bar {
     padding: 0 15px;
     position: relative;
-    height: 120px;
+    // height: 120px;
     width: 100%;
     display: flex;
     justify-content: space-between;
