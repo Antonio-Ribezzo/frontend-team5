@@ -346,7 +346,7 @@ export default {
                               <button type="submit" class="btn button-checkout btn-block btn-lg" >
                                 <div class="d-flex justify-content-between">
                                   <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
-                                  <span class="ms-3">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                  <span class="ms-3">Pay<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                                 </div>
                               </button>
                         </form>
