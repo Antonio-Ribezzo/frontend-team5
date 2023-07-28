@@ -20,12 +20,13 @@ export default {
             const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
             this.store.CartCounter = totalItems
+            this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             return this.store.CartCounter;
         }
     },
     created() {
         // Recupera i dati del carrello dal LocalStorage quando il componente è creato
-        this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         console.log(this.cartItems);
     },
 
@@ -89,29 +90,35 @@ export default {
 
             </div>
         </nav>
-        <div class="offcanvas up offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+
+        <div class="offcanvas up offcanvas-end " tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasRightLabel">Cart Preview</h5>
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Your Order</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body bg-board d-flex flex-column justify-content-between">
                 <ul>
                     <li class="text-decoration-none mr-4 my-3" v-for="item in cartItems" :key="item.id">
-                        <div class="row d-flex">
-                            <div class="col-3">
-                                <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image"
-                                    class="w-100">
+                        <div class="d-flex align-items-center w-100" style="height: 3.5rem;">
+                            <div style="width: 20%;">
+                                <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image" style="width: 100%; object-fit: cover;" >
+                            </div>
+                            <div class="sb-card-top d-flex h-100" style="width: 80%;">
+                                <h4 class="sb-card-title">{{ item.name }} {{ item.quantity }} pz.</h4>
+                                <div class="sb-price">
+                                    <sub style="font-size: 18px;">€</sub>{{ item.quantity === 1 ? item.price : (item.quantity *
+                                    item.price).toFixed(2) }}
+                                </div>
+                            </div>
+                            <!-- <div class="col-3 bg-warning align-items-center">
+                                <h6 class="text-black mb-0"></h6>
                             </div>
                             <div class="col-3 bg-warning align-items-center">
-                                <h6 class="text-black mb-0">{{ item.name }}</h6>
+                                <span class="text-center text-black">Quantity: </span>
                             </div>
                             <div class="col-3 bg-warning align-items-center">
-                                <span class="text-center text-black">Quantity: {{ item.quantity }} pz.</span>
-                            </div>
-                            <div class="col-3 bg-warning align-items-center">
-                                <h6 class="mb-0 text-black">€{{ item.quantity === 1 ? item.price : (item.quantity *
-                                    item.price).toFixed(2) }}</h6>
-                            </div>
+                                <h6 class="mb-0 text-black">€</h6>
+                            </div> -->
 
                         </div>
 
@@ -127,6 +134,39 @@ export default {
                 </div>
             </div>
         </div>
+
+        <!-- <div class="sb-minicart" id="offcanvasRight">
+            <div class="sb-minicart-content">
+              <div class="sb-ib-title-frame sb-mb-30">
+                <h4>Your order.</h4><i class="fas fa-arrow-down"></i>
+              </div>
+
+              <div v-for="item in cartItems" :key="item.id">
+                <a href="product.html" class="sb-menu-item sb-menu-item-sm sb-mb-15">
+                  <div class="sb-cover-frame">
+                    <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="product" style="width: 60.06px;">
+                  </div>
+                  <div class="sb-card-tp">
+                    <h4 class="sb-card-title">{{ item.name }} {{ item.quantity }}pz.</h4>
+                    <div class="sb-price"><sub>€</sub>{{ item.quantity === 1 ? item.price : (item.quantity *
+                        item.price).toFixed(2) }}</div>
+                  </div>
+                </a>
+              </div>
+            
+            </div>
+            <div class="sb-minicart-footer">
+               button -->
+            <!-- <router-link :to="{ name: 'cart' }" class="sb-btn sb-btn-text">
+                Checkout & Payment
+            </router-link>
+            </div>
+          </div> -->
+          <!-- minicart end -->
+
+        
+
+
     </div>
 </template>
 
@@ -248,5 +288,52 @@ nav .sb-navigation li a {
 
 .bg-board {
     background-image: url('https://th.bing.com/th/id/OIP.zpn9HcSt2rbo1PWTfinBwgAAAA?pid=ImgDet&rs=1');
+}
+
+.sb-card-tp {
+    margin-bottom: 15px;
+    padding-left: 15px;
+    background-color: #F2F3F5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sb-card-title {
+    font-size: 14px;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    width: calc(100% - 90px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    line-clamp: 1;
+    box-orient: vertical;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.sb-h4, h4 {
+    line-height: 120%;
+    font-size: 16px;
+    letter-spacing: 0;
+}
+
+.sb-price {
+    font-size: 18px;
+    width: 60px;
+    height: 60px;
+    font-weight: 500;
+    background-color: #F5C332;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
