@@ -125,21 +125,23 @@ export default {
             <!-- lista piatti -->
             <div class="row mb-5">
 
-                <div  v-for="(elem, index) in restaurant_items" :key="index" v-if="elem.available==1" class="col-lg-3 mb-3 flip">
-                    <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }"
-                        class="sb-menu-item sb-mb-30 text-decoration-none d-flex flex-column">
-                        <div class="card">
-                            <img class="card-img img-rest" width="100%" height="270"
-                                :src="`http://127.0.0.1:8000/storage/${elem.cover_image}`" :alt="index">
-                            <div
-                                class="card-img-overlay text-white text-center d-flex flex-column justify-content-center align-items-center">
-                                <h2>{{ elem.name }}</h2>
-                                <h6 class="rounded-pill bg-dark p-1">&euro;{{ elem.price }}</h6>
+                <div  v-for="(elem, index) in restaurant_items" :key="index" class="row">
+                    <div v-if="elem.available === 1" class="col-3 mb-3 flip" >
+                        <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }"
+                            class="sb-menu-item sb-mb-30 text-decoration-none d-flex flex-column" >
+                            <div class="card">
+                                <img class="card-img img-rest" width="100%" height="270"
+                                    :src="`http://127.0.0.1:8000/storage/${elem.cover_image}`" :alt="index">
+                                <div
+                                    class="card-img-overlay text-white text-center d-flex flex-column justify-content-center align-items-center">
+                                    <h2>{{ elem.name }}</h2>
+                                    <h6 class="rounded-pill bg-dark p-1">&euro;{{ elem.price }}</h6>
+                                </div>
                             </div>
-                        </div>
-                        <div class="btn btn-warning d-flex flex-column" @click="addToCart(elem)">Add to cart
-                        </div>
-                    </router-link>
+                            <div class="btn btn-warning d-flex flex-column" @click="addToCart(elem)">Add to cart
+                            </div>
+                        </router-link>
+                    </div>
                 </div>
             </div>
             <div id="custom-popup">
