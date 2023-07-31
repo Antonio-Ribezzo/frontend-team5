@@ -87,11 +87,16 @@ export default {
                 this.$emit('cart-updated');
 
             } else {
-                alert('Puoi aggiungere elementi solo da un singolo ristorante al carrello.');
-                return;
+                this.openPopup()
+                return
             }
+        }, 
+        openPopup() {
+            document.getElementById('custom-popup').style.display = 'block';
+        },
+        closePopup() {
+            document.getElementById('custom-popup').style.display = 'none';
         }
-
     }
 }
 
@@ -136,6 +141,13 @@ export default {
                     </router-link>
                 </div>
             </div>
+            <div id="custom-popup">
+              <div class="popup-content p-4">
+                <span class="close-btn btn btn-danger" @click="closePopup()">&times;</span>
+                <p class="mt-5 fs-5">Puoi aggiungere elementi al carrello solo da un singolo ristorante!</p>
+              </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -182,4 +194,35 @@ router-link {
         width: 100%;
     }
 }
+
+#custom-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+    padding: 3px 6px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 </style>
