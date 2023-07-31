@@ -34,7 +34,7 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div id="navContainer">
         <nav class="navbar navbar-expand-lg sb-top-bar-frame py-4">
             <div class="container d-flex justify-content-between sb-top-bar">
 
@@ -67,65 +67,42 @@ export default {
 
                 <div class="ms-3">
                     <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                        aria-controls="offcanvasRight">
+                    aria-controls="offcanvasScrolling">
                         <i class="fa-solid fa-cart-shopping position-relative">
                             <span class="sb-cart-number">
                                 {{ cartItemCount }}
                             </span>
                         </i>
                     </button>
-                    <!-- <router-link :to="{ name: 'cart'}" class="nav-link">
-                        <i class="fa-solid fa-cart-shopping position-relative"> 
-                            <span class="sb-cart-number">
-                              {{ cartItemCount }}
-                            </span>
-                        </i>
-                    </router-link> -->
                 </div>
-
-
-                <!-- <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="true" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button> -->
-
             </div>
         </nav>
 
-        <div class="offcanvas up offcanvas-end " tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas up offcanvas-end p-4" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" data-bs-dismiss="offcanvas" data-bs-toggle="offcanvas" data-bs-scroll="true" data-bs-backdrop="false">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasRightLabel">Your Order</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close" aria-label="Close" ></button>
             </div>
-            <div class="offcanvas-body bg-board d-flex flex-column justify-content-between">
-                <ul>
+            <div class="offcanvas-body border-0 d-flex flex-column justify-content-between offcanvas-start" data-bs-scroll="true">
+                <ul class="p-0 m-0">
                     <li class="text-decoration-none mr-4 my-3" v-for="item in cartItems" :key="item.id">
-                        <div class="d-flex align-items-center w-100" style="height: 3.5rem;">
-                            <div style="width: 20%;">
-                                <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image" style="width: 100%; object-fit: cover;" >
+                        <div class="d-flex justify-content-between align-items-strech containerOrder">
+                            <div class="d-flex justify-content-around align-items-center">
+                                <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image" style="height: 4rem;width: 4rem; object-fit: cover;">
                             </div>
-                            <div class="sb-card-top d-flex h-100" style="width: 80%;">
-                                <h4 class="sb-card-title">{{ item.name }} {{ item.quantity }} pz.</h4>
-                                <div class="sb-price">
-                                    <sub style="font-size: 18px;">€</sub>{{ item.quantity === 1 ? item.price : (item.quantity *
-                                    item.price).toFixed(2) }}
-                                </div>
+                            <div class="d-flex justify-content-between align-items-center px-2">
+                                <h4 class="mb-0 fs-6 me-4">{{ item.name }} </h4>
+                                <h5 class="mb-0 fs-6">x{{ item.quantity }}</h5>
                             </div>
-                            <!-- <div class="col-3 bg-warning align-items-center">
-                                <h6 class="text-black mb-0"></h6>
+                            <div class="containerPrice d-flex justify-content-around align-items-center p-2" style="height: 4rem;width: 4.5rem;">
+                                 <span class="text fw-semibold"><span class="fs-6">&euro;</span>{{ item.quantity === 1 ? item.price : (item.quantity *
+                                    item.price).toFixed(2) }}</span>
                             </div>
-                            <div class="col-3 bg-warning align-items-center">
-                                <span class="text-center text-black">Quantity: </span>
-                            </div>
-                            <div class="col-3 bg-warning align-items-center">
-                                <h6 class="mb-0 text-black">€</h6>
-                            </div> -->
-
                         </div>
-
                     </li>
                 </ul>
 
-                <div>
+                <div id="checkoutContainer">
                     <button class="btn btn-warning">
                         <router-link :to="{ name: 'cart' }" class="nav-link">
                             Checkout & Payment
@@ -134,50 +111,35 @@ export default {
                 </div>
             </div>
         </div>
-
-        <!-- <div class="sb-minicart" id="offcanvasRight">
-            <div class="sb-minicart-content">
-              <div class="sb-ib-title-frame sb-mb-30">
-                <h4>Your order.</h4><i class="fas fa-arrow-down"></i>
-              </div>
-
-              <div v-for="item in cartItems" :key="item.id">
-                <a href="product.html" class="sb-menu-item sb-menu-item-sm sb-mb-15">
-                  <div class="sb-cover-frame">
-                    <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="product" style="width: 60.06px;">
-                  </div>
-                  <div class="sb-card-tp">
-                    <h4 class="sb-card-title">{{ item.name }} {{ item.quantity }}pz.</h4>
-                    <div class="sb-price"><sub>€</sub>{{ item.quantity === 1 ? item.price : (item.quantity *
-                        item.price).toFixed(2) }}</div>
-                  </div>
-                </a>
-              </div>
-            
-            </div>
-            <div class="sb-minicart-footer">
-               button -->
-            <!-- <router-link :to="{ name: 'cart' }" class="sb-btn sb-btn-text">
-                Checkout & Payment
-            </router-link>
-            </div>
-          </div> -->
-          <!-- minicart end -->
-
-        
-
-
     </div>
 </template>
 
 <style lang="scss" scoped>
-nav {
-    width: 100%;
-    margin-right: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+#navContainer{
+    background-color: white;
+    z-index: 99999999;
+    position: sticky !important;
+    top: 0;
+    nav {
+        width: 100%;
+        margin-right: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .container{
+            .navbar-collapse{
+                ul{
+                    li{
+                        a{
+                            &:hover{
+                                color: #F5C332;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 li {
@@ -286,10 +248,6 @@ nav .sb-navigation li a {
     z-index: 9999;
 }
 
-.bg-board {
-    background-image: url('https://th.bing.com/th/id/OIP.zpn9HcSt2rbo1PWTfinBwgAAAA?pid=ImgDet&rs=1');
-}
-
 .sb-card-tp {
     margin-bottom: 15px;
     padding-left: 15px;
@@ -335,5 +293,28 @@ nav .sb-navigation li a {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.offcanvas{
+    // width: 30% !important;
+    top:6rem !important;
+    border: none !important;
+}
+
+#checkoutContainer{
+    border-top: 1px solid #f2f3f5;
+    padding-top: 2rem;
+}
+
+.containerOrder{
+    background-color: #f2f3f5;
+}
+
+.containerPrice{
+    background-color: #f5c332;
+}
+
+.fw-semibold{
+    font-size: 1.1rem;
 }
 </style>
