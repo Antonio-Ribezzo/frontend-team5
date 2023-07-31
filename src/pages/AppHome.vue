@@ -71,22 +71,21 @@ export default {
                 </div>
             </div>
         </section>
-        
-        
+
+
         <div class="container mt-5 py-4 ">
-            
+
             <div v-if="payment_message" class="overlay">
-                <div  class="payment-success text-center  p-2 ">
+                <div class="payment-success text-center  p-2 ">
                     <i class="fa-regular fa-circle-check fa-3x"></i>
-                    <h5>pagamento effettuato</h5>
+                    <h5>Payment completed!</h5>
                     <hr>
-                    <p class="my-4">riceverai un email con il riepilogo del tuo ordine!</p>
                     <button type="button" class="btn btn-secondary" @click="payment_message = false">Close</button>
                 </div>
             </div>
-    
+
             <!-- checkbox Types  -->
-            
+
             <h2 class="text-center">RESTAURANTS</h2>
             <div class="mt-2 p-4 rounded">
                 <div class="rounded d-flex justify-content-center align-items-center flex-wrap">
@@ -98,10 +97,10 @@ export default {
                     </label>
                 </div>
             </div>
-    
+
             <!-- lista ristoranti -->
             <div class="row mt-5">
-    
+
                 <div v-for="(elem, index) in restaurants" :key="index" class="col-lg-3">
                     <router-link :to="{ name: 'restaurant', params: { slug: elem.slug, id: elem.id } }"
                         class="sb-menu-item sb-mb-30 text-decoration-none">
@@ -117,7 +116,7 @@ export default {
                         </div>
                     </router-link>
                 </div>
-    
+
             </div>
         </div>
     </div>
@@ -222,35 +221,40 @@ label {
     transform: scale(1.05);
 }
 
-.overlay{
-  width: 100%;
-  position: absolute;
-  background-color: rgba($color: #000000, $alpha: .5);
-  z-index: 556;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100%;
-  .payment-success{
-    position: fixed;
-    width: 70%;
-    max-width: 800px;
-    margin: 0 auto;
-    top: 40%;
-    border-radius: 15px;
-    box-shadow: 0px 10px 20px black;
-    z-index: 555;
-    background-color: #E1F4E5;
-    border: 1px solid #28a181;
+.overlay {
+    width: 100%;
+    position: absolute;
+    background-color: rgba($color: #000000, $alpha: .5);
+    z-index: 556;
+    top: 0;
     left: 0;
     right: 0;
-    i{color:#28a181};
-    h5{
-      color: #28a181;
+    bottom: 0;
+    height: 100%;
+
+    .payment-success {
+        position: fixed;
+        width: 70%;
+        max-width: 800px;
+        margin: 0 auto;
+        top: 40%;
+        border-radius: 15px;
+        box-shadow: 0px 10px 20px black;
+        z-index: 555;
+        background-color: #E1F4E5;
+        border: 1px solid #28a181;
+        left: 0;
+        right: 0;
+
+        i {
+            color: #28a181
+        }
+
+        ;
+
+        h5 {
+            color: #28a181;
         }
     }
-}
-
-</style>
+}</style>
 

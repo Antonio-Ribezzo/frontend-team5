@@ -27,11 +27,11 @@ export default {
       expiration: "",
       cvv: "",
       paymentSuccess: false,
-      loadingShow:false,
-      paymentFinished:false,
+      loadingShow: false,
+      paymentFinished: false,
       store,
       baseUrl: "http://127.0.0.1:8000/",
-      success:false
+      success: false
     }
   },
   created() {
@@ -119,7 +119,7 @@ export default {
       localStorage.clear();
     },
 
-    sendForm(){
+    sendForm() {
       const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
       const cartItemsArray = Object.values(cartItems);
@@ -127,23 +127,23 @@ export default {
       const RestaurantIds = cartItemsArray.map(item => item.restaurant_id);
 
       const RestaurantId = RestaurantIds[0];
-      
-      console.log(RestaurantId,'restaurantid')
+
+      console.log(RestaurantId, 'restaurantid')
 
       const data = {
         order: cartItems,
         restaurant_id: RestaurantId,
-        customer_name:this.nameSurname,
-        customer_address:this.address,
-        mobile_number:this.mobileNumber,
-        customer_mail:this.email,
-        customer_notes:this.notes
+        customer_name: this.nameSurname,
+        customer_address: this.address,
+        mobile_number: this.mobileNumber,
+        customer_mail: this.email,
+        customer_notes: this.notes
       }
 
       axios.post(`${this.baseUrl}api/payment`, data).then(res => {
         this.success = res.data.success
 
-        if(this.success){
+        if (this.success) {
           this.nameSurname = '';
           this.address = '';
           this.mobileNumber = '';
@@ -153,7 +153,7 @@ export default {
           this.card_number = '';
           this.expiration = '';
 
-          
+
           setTimeout(() => {
             this.paymentSuccess = true;
             this.loadingShow = true;
@@ -164,20 +164,20 @@ export default {
 
               setTimeout(() => {
                 // Svuota il localStorage dopo il completamento del pagamento
-              localStorage.removeItem('cartItems');
-              
-              //Imposto il counter del carrello a 0
-              this.store.CartCounter = 0;
-                          
-              // Utilizza il router per navigare a 'AppHome'
-              this.$router.push({ name: 'AppHome' , query: { success: true } });
-            }, 1500);       
- 
-          }, 2000); // Aggiunto un ritardo di 2000 millisecondi (2 secondi) prima del secondo setTimeout
-          
-        }, 2000);
+                localStorage.removeItem('cartItems');
+
+                //Imposto il counter del carrello a 0
+                this.store.CartCounter = 0;
+
+                // Utilizza il router per navigare a 'AppHome'
+                this.$router.push({ name: 'AppHome', query: { success: true } });
+              }, 1500);
+
+            }, 2000); // Aggiunto un ritardo di 2000 millisecondi (2 secondi) prima del secondo setTimeout
+
+          }, 2000);
         }
-        
+
       })
     }
   }
@@ -215,7 +215,8 @@ export default {
                         </div>
 
 
-                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex flex-column justify-content-center align-items-center">
+                        <div
+                          class="col-md-3 col-lg-3 col-xl-2 d-flex flex-column justify-content-center align-items-center">
 
                           <h6>Quantity: </h6>
 
@@ -260,7 +261,7 @@ export default {
                         <div class="d-flex justify-content-between align-items-center mb-4">
                           <h5 class="mb-0">Payment</h5>
                         </div>
-                        
+
                         <!-- form  -->
                         <form class="mt-4" @submit.prevent="sendForm()">
                           <div class="form-group mb-3">
@@ -275,8 +276,8 @@ export default {
 
                           <div class="form-group mb-3">
                             <label class="form-label">Mobile number</label>
-                            <input type="text" id="Vat" class="form-control" name="mobile_number"
-                              v-model="mobileNumber" required>
+                            <input type="text" id="Vat" class="form-control" name="mobile_number" v-model="mobileNumber"
+                              required>
                           </div>
 
                           <div class="form-group mb-3">
@@ -287,62 +288,65 @@ export default {
 
                           <div class="form-group mb-5">
                             <label class="form-label">Note</label>
-                            <textarea required class="form-control" cols="30" rows="10"
-                              v-model="notes"></textarea>
+                            <textarea required class="form-control" cols="30" rows="10" v-model="notes"></textarea>
                           </div>
-                              <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                                  placeholder="Cardholder's Name" v-model="card_holder" required/>
-                                <label class="form-label" for="typeName">Cardholder's Name</label>
+                          <div class="form-outline form-white mb-4">
+                            <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
+                              placeholder="Cardholder's Name" v-model="card_holder" required />
+                            <label class="form-label" for="typeName">Cardholder's Name</label>
+                          </div>
+
+                          <div class="form-outline form-white mb-4">
+                            <input type="text" id="typeText1" class="form-control form-control-lg" siez="17"
+                              placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" v-model="card_number"
+                              required />
+                            <label class="form-label" for="typeText1">Card Number</label>
+                          </div>
+
+                          <div class="row mb-4">
+                            <div class="col-md-6">
+                              <div class="form-outline form-white">
+                                <input type="text" id="typeExp" class="form-control form-control-lg" placeholder="MM/YYYY"
+                                  size="7" minlength="7" maxlength="7" v-model="expiration" required />
+                                <label class="form-label" for="typeExp">Expiration</label>
                               </div>
-
-                              <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeText1" class="form-control form-control-lg" siez="17"
-                                  placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" v-model="card_number" required/>
-                                <label class="form-label" for="typeText1">Card Number</label>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-outline form-white">
+                                <input type="password" id="typeText2" class="form-control form-control-lg"
+                                  placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" v-model="cvv"
+                                  required />
+                                <label class="form-label" for="typeText2">Cvv</label>
                               </div>
+                            </div>
+                          </div>
 
-                              <div class="row mb-4">
-                                <div class="col-md-6">
-                                  <div class="form-outline form-white">
-                                    <input type="text" id="typeExp" class="form-control form-control-lg"
-                                      placeholder="MM/YYYY" size="7" minlength="7" maxlength="7" v-model="expiration" required/>
-                                    <label class="form-label" for="typeExp">Expiration</label>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-outline form-white">
-                                    <input type="password" id="typeText2" class="form-control form-control-lg"
-                                      placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" v-model="cvv" required/>
-                                    <label class="form-label" for="typeText2">Cvv</label>
-                                  </div>
-                                </div>
-                              </div>
+                          <hr class="my-4">
 
-                              <hr class="my-4">
-
-                              <div class="d-flex justify-content-between mb-4">
-                                <p class="mb-2">Total(Incl. taxes)</p>
-                                <p class="mb-2">€{{ calculateTotalPrice().toFixed(2) }}</p>
-                              </div>
+                          <div class="d-flex justify-content-between mb-4">
+                            <p class="mb-2">Total(Incl. taxes)</p>
+                            <p class="mb-2">€{{ calculateTotalPrice().toFixed(2) }}</p>
+                          </div>
 
 
-                              <button id="myBtn" type="submit" class="btn button-checkout btn-block btn-lg">
-                                
-                                <div v-if="loadingShow == true" class="spinner-border text-secondary d-flex justify-content-center" role="status">
-                                  <span class="visually-hidden">Loading...</span>
-                                </div>
+                          <button id="myBtn" type="submit" class="btn button-checkout btn-block btn-lg">
 
-                                <div v-if="paymentSuccess == false" class="d-flex justify-content-between">
-                                  <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
-                                  <span class="ms-3">Pay<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
-                                </div>
+                            <div v-if="loadingShow == true"
+                              class="spinner-border text-secondary d-flex justify-content-center" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
 
-                                <div v-if="paymentFinished == true" class="d-flex justify-content-between">
-                                    <span>Pagamento effettuato <i class="fa-solid fa-circle-check" style="color: #00ff55;"></i></span>
-                                </div>
+                            <div v-if="paymentSuccess == false" class="d-flex justify-content-between">
+                              <span>€{{ calculateTotalPrice().toFixed(2) }}</span>
+                              <span class="ms-3">Pay<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                            </div>
 
-                              </button>                              
+                            <div v-if="paymentFinished == true" class="d-flex justify-content-between">
+                              <span>Payment Completed<i class="fa-solid fa-circle-check"
+                                  style="color: #00ff55;"></i></span>
+                            </div>
+
+                          </button>
                         </form>
                       </div>
                     </div>
@@ -354,7 +358,7 @@ export default {
         </div>
       </div>
     </div>
-    
+
   </section>
 </template>
 
@@ -406,6 +410,4 @@ export default {
 .button-minus:hover {
   transform: scale(1.2);
 }
-
-
 </style>
