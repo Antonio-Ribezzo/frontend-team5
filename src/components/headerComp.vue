@@ -21,6 +21,7 @@ export default {
             const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
             this.store.CartCounter = totalItems
             this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            // console.log(this.cartItems);
             return this.store.CartCounter;
         }
     },
@@ -29,6 +30,15 @@ export default {
         // this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         console.log(this.cartItems);
     },
+    methods: {
+        calculateTotalPrice() {
+            let total = 0;
+            for (const item of this.cartItems) {
+              total += item.quantity * item.price;
+            }
+            return total;
+        },
+    }
 
 }
 </script>
@@ -63,6 +73,8 @@ export default {
                             <a class="nav-link" href="http://127.0.0.1:8000/login" target="_blank">Login</a>
                         </li>
                     </ul>
+
+                    
                 </div>
 
                 <div class="ms-3">
@@ -85,21 +97,25 @@ export default {
             </div>
             <div class="offcanvas-body border-0 d-flex flex-column justify-content-between offcanvas-start" data-bs-scroll="true">
                 <ul class="p-0 m-0">
-                    <li class="text-decoration-none mr-4 my-3" v-for="item in cartItems" :key="item.id">
+                    <li class="text-decoration-none my-3" v-for="item in cartItems" :key="item.id" >
                         <div class="d-flex justify-content-between align-items-strech containerOrder">
-                            <div class="d-flex justify-content-around align-items-center">
+                            <div class="d-flex justify-content-around align-items-center imgCartPreview">
                                 <img :src="`http://127.0.0.1:8000/storage/${item.cover_image}`" alt="cover-image" style="height: 4rem;width: 4rem; object-fit: cover;">
                             </div>
-                            <div class="d-flex justify-content-between align-items-center px-2">
-                                <h4 class="mb-0 fs-6 me-4">{{ item.name }} </h4>
+                            <div class="d-flex justify-content-between align-items-center titleCartPreview">
+                                <h4 class="mb-0 fs-6">{{ item.name }} </h4>
                                 <h5 class="mb-0 fs-6">x{{ item.quantity }}</h5>
                             </div>
-                            <div class="containerPrice d-flex justify-content-around align-items-center p-2" style="height: 4rem;width: 4.5rem;">
-                                 <span class="text fw-semibold"><span class="fs-6">&euro;</span>{{ item.quantity === 1 ? item.price : (item.quantity *
+                            <div class="containerPrice d-flex justify-content-center align-items-center priceCartPreview" style="height: 4rem;">
+                                 <span class=" fw-semibold">&euro;{{ item.quantity === 1 ? item.price : (item.quantity *
                                     item.price).toFixed(2) }}</span>
                             </div>
                         </div>
                     </li>
+                    <hr>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <span class="text-end">Total: € <span class="fw-bold fs-4">{{ calculateTotalPrice().toFixed(2) }} </span></span>
+                    </div>
                 </ul>
 
                 <div id="checkoutContainer">
@@ -316,5 +332,17 @@ nav .sb-navigation li a {
 
 .fw-semibold{
     font-size: 1.1rem;
+}
+
+.imgCartPreview{
+    width: 4rem;
+}
+
+.titleCartPreview{
+    width: 10rem;
+}
+
+.priceCartPreview{
+    width: 4rem;
 }
 </style>
