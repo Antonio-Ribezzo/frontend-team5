@@ -101,8 +101,17 @@ export default {
 <template>
     <div>
         <div class="container py-5">
-            <h1 v-if="restaurant" class="text-center mt-5"> {{ restaurant.name }} </h1>
-            <p v-if="restaurant" class="text-center mt-2"> <b>Address: </b> {{ restaurant.address }} </p>
+            <div class="row box-1">
+                <div class="col-12 col-lg-4">
+                    <img class="card-img img-rest mb-4"
+                                    :src="`http://127.0.0.1:8000/storage/${restaurant.restaurant_image}`" :alt="index">
+                </div>
+                <div class="col-12 col-lg-8">
+                    <h1 v-if="restaurant" class="text-center"> {{ restaurant.name }} </h1>
+                    <p v-if="restaurant" class=" mt-2 ps-lg-5"> <b>Address: </b> {{ restaurant.address }} </p>
+                    <p v-if="restaurant.types" class=" mt-2 ps-lg-5"><b>Typology: </b> <span v-for="(elem, index) in restaurant.types">{{ elem.name }}, </span></p>
+                </div>
+            </div>
 
             <h2 class="text-center my-5 text-black fst-italic text-uppercase">menu</h2>
 
@@ -166,82 +175,11 @@ router-link {
     }
 }
 
+.box-1{
+    img{
+        border-radius: 12px;
+        width: 100%;
+    }
+}
 
-// .sb-menu-item .sb-card-tp {
-//     margin-bottom: 15px;
-//     padding-left: 15px;
-//     background-color: #F2F3F5;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-// }
-
-// .sb-menu-item .sb-cover-frame {
-//     display: block;
-//     background-color: #F2F3F5;
-//     overflow: hidden;
-//     position: relative;
-//     padding-bottom: 100%;
-//     transition: 0.3s ease-in-out;
-// }
-
-// .sb-menu-item .sb-cover-frame img {
-//     width: 100%;
-//     height: 100%;
-//     position: absolute;
-//     object-fit: cover;
-//     object-position: center;
-//     z-index: 1;
-//     top: 0;
-//     left: 0;
-//     right: 0;
-//     transform: scale(1.001);
-//     transition: 0.3s ease-in-out;
-
-//     &:hover {
-//         scale: 105%;
-//     }
-// }
-
-// .sb-menu-item .sb-card-tp {
-//     margin-bottom: 15px;
-//     padding-left: 15px;
-//     background-color: #F2F3F5;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     color: black;
-// }
-
-// .sb-menu-item .sb-card-tp .sb-card-title {
-//     // width: calc(100% - 90px);
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//     display: -moz-box;
-//     -moz-box-orient: vertical;
-//     display: -webkit-box;
-//     -webkit-line-clamp: 1;
-//     -webkit-box-orient: vertical;
-//     line-clamp: 1;
-//     box-orient: vertical;
-//     font-weight: 600;
-//     color: black;
-// }
-
-// .sb-menu-item .sb-card-tp .sb-price {
-//     width: 60px;
-//     height: 60px;
-//     font-weight: 500;
-//     background-color: #F5C332;
-//     font-size: 24px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     color: black;
-// }
-
-// .sb-menu-item .sb-card-tp .sb-price sub {
-//     font-size: 12px;
-//     font-weight: 400;
-// }
 </style>
