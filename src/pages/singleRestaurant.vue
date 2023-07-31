@@ -35,9 +35,14 @@ export default {
             //http://127.0.0.1:8000/api/restaurants/2/items
 
             axios.get(`${this.store.baseUrl}/restaurants/${this.$route.params.id}/items`).then((response) => {
-                console.log(response.data.items)
-                this.restaurant_items = response.data.items;
-                console.log(this.restaurant_items)
+                // console.log(response.data.items, 'piatti')
+                response.data.items.forEach(element => {
+                    if(element.available === 1){
+                        this.restaurant_items.push(element)
+                    }
+                });
+                // this.restaurant_items = response.data.items;
+                // console.log(this.restaurant_items, 'risultato')
                 //console.log(this.$route)
             }, error => {
                 if (error.response.status === 404) {
@@ -124,24 +129,21 @@ export default {
 
             <!-- lista piatti -->
             <div class="row mb-5">
-
-                <div  v-for="(elem, index) in restaurant_items" :key="index" class="row">
-                    <div v-if="elem.available === 1" class="col-3 mb-3 flip" >
-                        <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }"
-                            class="sb-menu-item sb-mb-30 text-decoration-none d-flex flex-column" >
-                            <div class="card">
-                                <img class="card-img img-rest" width="100%" height="270"
-                                    :src="`http://127.0.0.1:8000/storage/${elem.cover_image}`" :alt="index">
-                                <div
-                                    class="card-img-overlay text-white text-center d-flex flex-column justify-content-center align-items-center">
-                                    <h2>{{ elem.name }}</h2>
-                                    <h6 class="rounded-pill bg-dark p-1">&euro;{{ elem.price }}</h6>
-                                </div>
+                <div v-for="(elem, index) in restaurant_items" :key="index" class="col-3 mb-3 flip">
+                    <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }"
+                        class="sb-menu-item sb-mb-30 text-decoration-none d-flex flex-column" >
+                        <div class="card">
+                            <img class="card-img img-rest" width="100%" height="270"
+                                :src="`http://127.0.0.1:8000/storage/${elem.cover_image}`" :alt="index">
+                            <div
+                                class="card-img-overlay text-white text-center d-flex flex-column justify-content-center align-items-center">
+                                <h2>{{ elem.name }}</h2>
+                                <h6 class="rounded-pill bg-dark p-1">&euro;{{ elem.price }}</h6>
                             </div>
-                            <div class="btn btn-warning d-flex flex-column" @click="addToCart(elem)">Add to cart
-                            </div>
-                        </router-link>
-                    </div>
+                        </div>
+                        <div class="btn btn-warning d-flex flex-column" @click="addToCart(elem)">Add to cart
+                        </div>
+                    </router-link>
                 </div>
             </div>
             <div id="custom-popup">
