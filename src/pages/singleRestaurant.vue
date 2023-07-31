@@ -103,13 +103,14 @@ export default {
         <div class="container py-5">
             <div class="row box-1">
                 <div class="col-12 col-lg-4">
-                    <img class="card-img img-rest mb-4"
-                                    :src="`http://127.0.0.1:8000/storage/${restaurant.restaurant_image}`" :alt="index">
+                    <img class="card-img img-rest mb-4 rounded"
+                        :src="`http://127.0.0.1:8000/storage/${restaurant.restaurant_image}`" :alt="index">
                 </div>
                 <div class="col-12 col-lg-8">
                     <h1 v-if="restaurant" class="text-center"> {{ restaurant.name }} </h1>
                     <p v-if="restaurant" class=" mt-2 ps-lg-5"> <b>Address: </b> {{ restaurant.address }} </p>
-                    <p v-if="restaurant.types" class=" mt-2 ps-lg-5"><b>Typology: </b> <span v-for="(elem, index) in restaurant.types">{{ elem.name }}, </span></p>
+                    <p v-if="restaurant.types" class=" mt-2 ps-lg-5"><b>Typology: </b> <span
+                            v-for="(elem, index) in restaurant.types">{{ elem.name }}, </span></p>
                 </div>
             </div>
 
@@ -175,11 +176,10 @@ router-link {
     }
 }
 
-.box-1{
-    img{
+.box-1 {
+    img {
         border-radius: 12px;
         width: 100%;
     }
 }
-
 </style>
