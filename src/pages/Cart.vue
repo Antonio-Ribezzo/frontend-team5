@@ -170,7 +170,7 @@ export default {
               this.store.CartCounter = 0;
                           
               // Utilizza il router per navigare a 'AppHome'
-              this.$router.push({ name: 'AppHome' });
+              this.$router.push({ name: 'AppHome' , query: { success: true } });
             }, 1500);       
  
           }, 2000); // Aggiunto un ritardo di 2000 millisecondi (2 secondi) prima del secondo setTimeout
