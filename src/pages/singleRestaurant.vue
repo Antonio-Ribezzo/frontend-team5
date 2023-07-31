@@ -66,6 +66,7 @@ export default {
                 if (cartItem) {
                     cartItem.quantity++;
                     this.store.CartCounter++;
+                    console.log(this.restaurant_items)
                 } else {
                     cartItems.push({
                         id: item.id,
@@ -77,7 +78,7 @@ export default {
                     });
                     this.store.CartCounter++;
 
-
+                    console.log(this.restaurant_items)
                 }
 
                 // Salva i dati aggiornati nel localStorage
@@ -124,7 +125,7 @@ export default {
             <!-- lista piatti -->
             <div class="row mb-5">
 
-                <div v-for="(elem, index) in restaurant_items" :key="index" class="col-lg-3 mb-3 flip">
+                <div  v-for="(elem, index) in restaurant_items" :key="index" v-if="elem.available==1" class="col-lg-3 mb-3 flip">
                     <router-link :to="{ name: 'restaurant', params: { slug: elem.slug } }"
                         class="sb-menu-item sb-mb-30 text-decoration-none d-flex flex-column">
                         <div class="card">
