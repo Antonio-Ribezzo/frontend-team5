@@ -141,6 +141,7 @@ export default {
 }
 
 
+
 label {
     height: 80px;
     width: 80px;
@@ -256,5 +257,34 @@ label {
             color: #28a181;
         }
     }
-}</style>
+}
+
+@media only screen and (max-width: 600px){
+    label {
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    margin: 1rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .customMark {
+        font-size: 1.5rem;
+        color: green;
+        background-color: rgba(0, 0, 0, 0.305);
+        width: 100%;
+        height: 100%;
+    }
+
+    &:hover {
+        scale: 105%;
+    }
+
+    input {
+        display: none;
+    }
+}
+}
+</style>
 
